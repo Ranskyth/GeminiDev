@@ -8,14 +8,11 @@ export default function RootLayout({
 }>) {
   return (
     <div>
-        <Header/>
-
-    <div className="flex">
-        <Siderbar/>
-  
-            {children}
-        
-    </div>
+      <Header />
+      <div className="flex">
+        <Siderbar />
+        {children}
+      </div>
     </div>
   );
 }

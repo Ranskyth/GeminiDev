@@ -20,13 +20,14 @@ public class User {
     @Column(name = "nome")
     private String Nome;
 
+
     @Column(name = "email")
     private String Email;
 
     @Column(name = "senha")
     private String Senha;
 
-    @Column(name = "role")
+    @Column(name = "role", columnDefinition = "DEFAULT 'USER'")
     private String Role;
 
     @Column(name = "githubName")
