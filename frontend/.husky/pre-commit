@@ -1,1 +1,2 @@
+echo "Run -> npm run format"; 
 npm run format
