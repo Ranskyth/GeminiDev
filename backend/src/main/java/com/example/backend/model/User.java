@@ -20,18 +20,17 @@ public class User {
     @Column(name = "nome")
     private String Nome;
 
-
     @Column(name = "email")
     private String Email;
 
     @Column(name = "senha")
     private String Senha;
 
-    @Column(name = "role", columnDefinition = "DEFAULT 'USER'")
+    @Column(name = "role")
     private String Role;
 
-    @Column(name = "githubName")
-    private String GithubName;
+    @Column(name = "github")
+    private String Github;
 
     @Column(name = "diciplina")
     private String Diciplina;
@@ -40,12 +39,12 @@ public class User {
 
     }
 
-    public User(UUID Id, String Nome, String Email, String Senha, String GithubName, String Diciplina) {
+    public User(UUID Id, String Nome, String Email, String Senha, String Github, String Diciplina) {
         this.Id = Id;
         this.Nome = Nome;
         this.Email = Email;
         this.Senha = Senha;
-        this.GithubName = GithubName;
+        this.Github = Github;
         this.Diciplina = Diciplina;
     }
 
@@ -57,8 +56,8 @@ public class User {
         return Email;
     }
 
-    public String getGithubName() {
-        return GithubName;
+    public String getGithub() {
+        return Github;
     }
 
     public UUID getId() {
@@ -81,8 +80,8 @@ public class User {
         Email = email;
     }
 
-    public void setGithubName(String githubName) {
-        GithubName = githubName;
+    public void setGithub(String github) {
+        Github = github;
     }
 
     public void setId(UUID id) {

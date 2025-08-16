@@ -10,7 +10,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "turmas")
+@Table(name = "turma")
 public class Turma {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)

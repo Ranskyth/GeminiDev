@@ -4,7 +4,7 @@ public class UserDto {
     private String Nome;
     private String Email;
     private String Senha;
-    private String GithubName;
+    private String Github;
     private String Diciplina;
 
     public String getDiciplina() {
@@ -15,8 +15,8 @@ public class UserDto {
         return Email;
     }
 
-    public String getGithubName() {
-        return GithubName;
+    public String getGithub() {
+        return Github;
     }
 
     public String getNome() {
@@ -35,8 +35,8 @@ public class UserDto {
         Email = email;
     }
 
-    public void setGithubName(String githubName) {
-        GithubName = githubName;
+    public void setGithub(String github) {
+        Github = github;
     }
 
     public void setNome(String nome) {
