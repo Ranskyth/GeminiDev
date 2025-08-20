@@ -18,8 +18,8 @@ return (
 				/>
 				<div className="flex justify-between">
 <div className="flex flex-col">
-	<Link href={"http://localhost:3000/register"}>criar conta</Link>
-		<Link href={"http://localhost:3000/reset-password"}>
+	<Link href={"/register"}>criar conta</Link>
+		<Link href={"/reset-password"}>
 				esqueci minha senha
 						</Link>
 					          </div>
