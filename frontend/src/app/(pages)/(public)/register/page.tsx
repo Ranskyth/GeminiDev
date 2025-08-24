@@ -14,9 +14,8 @@ export default function Login() {
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json",
-				Authorization:
-					"Basic dXNlcjo5MTk4MDYzMy05ZjI0LTQ1ZjYtOWVlZS02OTI2YTdiYTIwMDI=",
 			},
+			
 			body: JSON.stringify(data),
 		});
 	};

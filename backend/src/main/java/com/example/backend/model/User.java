@@ -1,98 +1,83 @@
 package com.example.backend.model;
 
+import java.util.Collection;
 import java.util.UUID;
+
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import lombok.Builder;
+import lombok.Data;
 
 @Entity
 @Table(name = "user")
-public class User {
+@Data
+@Builder
+public class User implements UserDetails {
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private UUID Id;
+    private long id;
 
     @Column(name = "nome")
-    private String Nome;
+    private String nome;
 
-    @Column(name = "email")
-    private String Email;
+    @Column(name = "email", unique = true)
+    private String email;
 
     @Column(name = "senha")
-    private String Senha;
-
-    @Column(name = "role")
-    private String Role;
+    private String senha;
 
     @Column(name = "github")
-    private String Github;
+    private String github;
 
     @Column(name = "diciplina")
-    private String Diciplina;
+    private String diciplina;
 
-    public User() {
+    @Enumerated(EnumType.STRING)
+    private UserRole role;
 
+    public void setRole(UserRole role) {
+        this.role = role;
     }
 
-    public User(UUID Id, String Nome, String Email, String Senha, String Github, String Diciplina) {
-        this.Id = Id;
-        this.Nome = Nome;
-        this.Email = Email;
-        this.Senha = Senha;
-        this.Github = Github;
-        this.Diciplina = Diciplina;
+    public User(){}
+
+    
+    public User(long id, String nome, String email, String senha, String github, String diciplina,
+            UserRole role) {
+        this.id = id;
+        this.nome = nome;
+        this.email = email;
+        this.senha = senha;
+        this.github = github;
+        this.diciplina = diciplina;
+        this.role = role;
+            }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getAuthorities'");
     }
 
-    public String getDiciplina() {
-        return Diciplina;
+    @Override
+    public String getPassword() {
+        return senha;
     }
 
-    public String getEmail() {
-        return Email;
+    @Override
+    public String getUsername() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getUsername'");
     }
 
-    public String getGithub() {
-        return Github;
-    }
-
-    public UUID getId() {
-        return Id;
-    }
-
-    public String getNome() {
-        return Nome;
-    }
-
-    public String getSenha() {
-        return Senha;
-    }
-
-    public void setDiciplina(String diciplina) {
-        Diciplina = diciplina;
-    }
-
-    public void setEmail(String email) {
-        Email = email;
-    }
-
-    public void setGithub(String github) {
-        Github = github;
-    }
-
-    public void setId(UUID id) {
-        Id = id;
-    }
-
-    public void setNome(String nome) {
-        Nome = nome;
-    }
-
-    public void setSenha(String senha) {
-        Senha = senha;
-    }
 }

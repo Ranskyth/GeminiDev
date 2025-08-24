@@ -1,49 +1,49 @@
 package com.example.backend.dto;
 
 public class UserDto {
-    private String Nome;
-    private String Email;
-    private String Senha;
-    private String Github;
-    private String Diciplina;
+    private String nome;
+    private String email;
+    private String senha;
+    private String github;
+    private String diciplina;
 
     public String getDiciplina() {
-        return Diciplina;
+        return diciplina;
     }
 
     public String getEmail() {
-        return Email;
+        return email;
     }
 
     public String getGithub() {
-        return Github;
+        return github;
     }
 
     public String getNome() {
-        return Nome;
+        return nome;
     }
 
     public String getSenha() {
-        return Senha;
+        return senha;
     }
 
     public void setDiciplina(String diciplina) {
-        Diciplina = diciplina;
+        this.diciplina = diciplina;
     }
 
     public void setEmail(String email) {
-        Email = email;
+        this.email = email;
     }
 
     public void setGithub(String github) {
-        Github = github;
+        this.github = github;
     }
 
     public void setNome(String nome) {
-        Nome = nome;
+        this.nome = nome;
     }
 
     public void setSenha(String senha) {
-        Senha = senha;
+        this.senha = senha;
     }
 }
