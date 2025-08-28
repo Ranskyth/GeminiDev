@@ -16,39 +16,40 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 @Component
-public class AuthMiddleware extends OncePerRequestFilter{
+public class AuthMiddleware extends OncePerRequestFilter {
 
-@Autowired
+    @Autowired
     private TokenServices tokenService;
-    
+
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
-        System.out.println("passou pelo filtro");
 
         var header = request.getHeader("Authorization");
-        if(header == null){
+        if (header == null) {
             filterChain.doFilter(request, response);
             return;
         }
 
-        if(!header.startsWith("Bearer ")){
+        if (!header.startsWith("Bearer ")) {
             response.setStatus(401);
-            response.getWriter().write(""" 
-                {"message": "Header deve iniciar com Bearer"} 
-            """);
+            response.getWriter().write("""
+                        {"message": "Header deve iniciar com Bearer"}
+                    """);
             return;
         }
 
         var jwt = header.replace("Bearer ", "");
-        
+
+        System.out.println("jwt: " + jwt);
+
         var user = tokenService.getUserFromToken(jwt);
-        
+        System.out.println("user" + user);
         var authentication = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
         filterChain.doFilter(request, response);
 
     }
-    
+
 }

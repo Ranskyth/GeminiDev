@@ -26,7 +26,7 @@ public class TokenServices {
                 .withExpiresAt(expiresAt)
                 .sign(algorithm);
 
-        return new Token(jwt, user.getEmail(), user.getGithub());
+        return new Token(jwt, user.getGithub());
 
     }
 
@@ -34,7 +34,6 @@ public class TokenServices {
         var jwtVerified = JWT.require(algorithm).build().verify(jwt);
         String role = jwtVerified.getClaim("role").asString();
         return User.builder()
-                .id(Long.valueOf(jwtVerified.getSubject()))
                 .email(jwtVerified.getClaim("email").toString())
                 .role(UserRole.valueOf(role))
                 .build();
