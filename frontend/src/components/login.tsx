@@ -31,7 +31,7 @@ export const LoginForms = () => {
       const resjson = await res.json();
 
       if (!res.ok) {
-        return toast("Senha ou Email Invalido");
+        return toast("Senha ou Email Invalido", {theme:"dark"});
       }
       setCookie("auth_geminidev", resjson.token);
       setCookie("github_user", resjson.github);
@@ -41,7 +41,7 @@ export const LoginForms = () => {
       
     } catch (err) {
       console.log(err);
-      toast("Error...");
+      toast("Error...",{theme:"dark"});
     }
   };
   return (
@@ -73,7 +73,7 @@ export const LoginForms = () => {
           <button className="bg-red-500 px-5 py-2 rounded-2xl">Entrar</button>
         </div>
       </form>
-      <ToastContainer />
+      <ToastContainer/>
     </div>
   );
 };

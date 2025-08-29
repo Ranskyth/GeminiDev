@@ -2,12 +2,15 @@
 "use client";
 
 import { BACKEND } from "@/config/config";
+import { useRouter } from "next/navigation";
+
 
 import { useForm } from "react-hook-form";
 import { toast, ToastContainer } from "react-toastify";
 
 export default function Login() {
   const { register, handleSubmit } = useForm();
+  const router = useRouter()
 
   const submit = (data: any) => {
     console.log(data);
@@ -19,7 +22,11 @@ export default function Login() {
 
       body: JSON.stringify(data),
     });
-	toast("Usuario Cadastrado com Sucesso")
+	toast("Usuario Cadastrado com Sucesso", {theme:"dark"})
+
+	setTimeout(() => {
+		router.back()
+	}, 5000);
 	
   };
 

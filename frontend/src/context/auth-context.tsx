@@ -20,25 +20,23 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const router = useRouter();
 
   const verifyToken = (token: string) => {
-    if (!token) {
-      console.log("Nenhum token");
-      return setAuth(false);
-    }
 
     if (!token.split(".")[2]) {
       console.log("Token mau formatado");
       return setAuth(false);
     }
 
-    const decodeToken: UserToken = jwtDecode(token);
+    (async () => {
+      const decodeToken: UserToken = await jwtDecode(token);
 
-    setAuth(true);
+      setAuth(true);
 
-    if (decodeToken.role != "ADMIN") {
-      return router.push("/dashboard");
-    }
+      if (decodeToken.role != "ADMIN") {
+        return router.push("/dashboard");
+      }
 
-    return router.push("/admin/dasboard");
+      return router.push("/admin/dasboard");
+    })();
   };
 
   return (

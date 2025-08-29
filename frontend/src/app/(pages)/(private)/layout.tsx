@@ -17,14 +17,22 @@ export default function RootLayout({
   useEffect(() => {
     verifyToken(String(token));
     console.log(token);
-  });
+  }, [auth]);
 
   console.log(auth);
 
-  if (!auth) {
+  if (auth == undefined) {
     return (
       <div className="flex justify-center items-center h-screen">
-        <h1 className="text-2xl font-bold">Token de sessão invalido</h1>
+		<span className="loading loading-spinner loading-xl"></span>
+      </div>
+    );
+  }
+
+  if(auth == false){
+	    return (
+      <div className="flex justify-center items-center h-screen">
+		<h1 className="text-2xl font-semibold">Usuario Não Autenticado</h1>
       </div>
     );
   }

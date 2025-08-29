@@ -6,7 +6,7 @@ export const SiderbarClient = () => {
 	const params = usePathname();
 
 	return (
-		<div className="flex flex-col duration-700 ease-in-out gap-2 w-[250px] px-2 py-2 h-screen bg-[#222533]">
+		<div className="flex flex-col duration-700 ease-in-out gap-2 w-[300px] px-2 py-2 h-screen bg-[#222533]">
 			<Button href={"/dashboard"} active={params == "/dashboard"}>
 				Dashboard
 			</Button>
