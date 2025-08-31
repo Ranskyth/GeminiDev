@@ -18,7 +18,7 @@ public class TurmaController {
     @Autowired
     private TurmaRepository turmaRepository;
 
-    @GetMapping
+    @GetMapping("/all")
     public List<Turma> getMethodName() {
         return turmaRepository.findAll();
     }

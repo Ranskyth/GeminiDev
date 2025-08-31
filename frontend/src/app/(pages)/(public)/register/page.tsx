@@ -3,13 +3,30 @@
 
 import { BACKEND } from "@/config/config";
 import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 
 import { useForm } from "react-hook-form";
 import { toast, ToastContainer } from "react-toastify";
 
+interface ITurmaProps{
+	id: number
+	nome: string
+}
+
 export default function Login() {
 	const { register, handleSubmit } = useForm();
+	const [turma, setTurma] = useState<[ITurmaProps]>([{} as ITurmaProps])
 	const router = useRouter();
+
+
+	useEffect(() => {
+		(async() => {
+			const data = await fetch(`${BACKEND}/api/v1/turma/all`)
+			setTurma(await data.json())
+		})()
+
+	},[])
+
 
 	const submit = (data: any) => {
 		console.log(data);
@@ -68,10 +85,13 @@ export default function Login() {
 						className="border-[#3f4150] px-5 h-12 border-1 rounded-2xl"
 					/>
 					<p>Diciplina</p>
-					<input
-						{...register("diciplina")}
-						className="border-[#3f4150] px-5 h-12 border-1 rounded-2xl"
-					/>
+					<select {...register("turma")} className="border-[#3f4150] border-1 px-5 h-12 rounded-2xl">
+						<option className="bg-[#222533]" value="">Selecione uma diciplinas</option>
+						{turma?.map((x) => 
+							<option className="bg-[#222533]" key={x.id} value={Number(x.id)}>{x.nome}</option>
+						
+						)}
+					</select>
 					<div className="flex justify-between">
 						<button type="submit" className="bg-red-500 px-5 py-2 rounded-2xl">
 							Criar Conta

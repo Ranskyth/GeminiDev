@@ -7,6 +7,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -14,6 +15,9 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.Builder;
 import lombok.Data;
@@ -40,24 +44,28 @@ public class User implements UserDetails {
     @Column(name = "github")
     private String github;
 
-    @Column(name = "diciplina")
-    private String diciplina;
-
     @Enumerated(EnumType.STRING)
     private UserRole role;
+
+    @ManyToOne
+    @JoinColumn(name = "turma_id")
+    private Turma turma;
+
+    @OneToMany(mappedBy = "user")
+    private List<Atributo> atributo;
 
     public User(){}
 
     
-    public User(long id, String nome, String email, String senha, String github, String diciplina,
-            UserRole role) {
+    public User(long id, String nome, String email, String senha, String github,
+            UserRole role, Turma turma, List<Atributo> atributos) {
         this.id = id;
         this.nome = nome;
         this.email = email;
         this.senha = senha;
         this.github = github;
-        this.diciplina = diciplina;
         this.role = role;
+        this.turma = turma;
             }
 
     @Override
@@ -74,5 +82,6 @@ public class User implements UserDetails {
     public String getUsername() {
         return email;
     }
+
 
 }

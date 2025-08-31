@@ -1,14 +1,16 @@
 package com.example.backend.dto;
 
+import com.example.backend.model.Turma;
+
 public class UserDto {
     private String nome;
     private String email;
     private String senha;
     private String github;
-    private String diciplina;
+    private long turma;
 
-    public String getDiciplina() {
-        return diciplina;
+    public long getTurma() {
+        return turma;
     }
 
     public String getEmail() {
@@ -27,8 +29,8 @@ public class UserDto {
         return senha;
     }
 
-    public void setDiciplina(String diciplina) {
-        this.diciplina = diciplina;
+    public void setTurma(int turma) {
+        this.turma = turma;
     }
 
     public void setEmail(String email) {

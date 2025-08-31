@@ -3,7 +3,6 @@ package com.example.backend.controllers;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
-import java.util.Optional;
 
 import com.example.backend.dto.UserDto;
 import com.example.backend.model.User;
@@ -13,7 +12,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -35,7 +33,7 @@ public class UserController {
     }
 
     @GetMapping
-    public ResponseEntity<User> getUserByEmail(@RequestParam String email){
+    public ResponseEntity<User> getUserByEmail(@RequestParam String email) {
         return userRepository.findByEmail(email).map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
     }
 
@@ -46,7 +44,6 @@ public class UserController {
         user.setSenha(userDto.getSenha());
         user.setEmail(userDto.getEmail());
         user.setGithub(userDto.getGithub());
-        user.setDiciplina(userDto.getDiciplina());
         return userRepository.save(user);
     }
 
