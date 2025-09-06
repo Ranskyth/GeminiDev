@@ -2,18 +2,17 @@
 
 import { CardMissao } from "@/components/card-missao";
 import { CardVazio } from "@/components/card-vazio";
-import { AuthContext } from "@/context/auth-context";
 import { getCookie } from "cookies-next";
-import { useContext, useEffect } from "react";
 
 export default function Dashboard() {
+	const user = getCookie("name_user")
 	return (
 		<div className="bg-[#1B1E26] flex-1 w-full h-screen px-10 py-5">
 			<div>
 				<div className="bg-[#9A32EF] mb-5 rounded-[0.50rem] h-42 flex justify-between px-5">
 					<div className="flex justify-center flex-col gap-3">
 						<h1>
-							Olá, <span className="text-[1.2rem] font-bold">gabriel</span>
+							Olá, <span className="text-[1.2rem] font-bold">{user}</span>
 						</h1>
 						<p>
 							chegou a hora de entrar na aventura <p>no conecimento</p>

@@ -1,13 +1,16 @@
 "use client";
 
+import { getCookie } from "cookies-next";
+
 export default function Notas() {
+	const user = getCookie("name_user")
 	return (
 		<div className="bg-[#1B1E26] flex-1 w-full h-screen px-20 py-5">
 			<div>
 				<div className="bg-[url('https://geminidev.com.br/images/bg_grade.jpg')] h-64 bg-center rounded-3xl flex justify-between px-5">
 					<div className="flex flex-col gap-7">
 						<h1>
-							Olá, <span>gabriel</span>
+							Olá, <span>{user}</span>
 						</h1>
 						<p className="w-62">
 							Aqui você pode acompanhar a sua nota na disciplina. A nota exibida

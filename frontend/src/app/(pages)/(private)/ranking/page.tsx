@@ -1,6 +1,9 @@
 "use client";
 
+import { getCookie } from "cookies-next";
+
 export default function Ranking() {
+	const user = getCookie("nome_user")
 	return (
 		<div className="bg-[#1B1E26] flex-1 w-full h-screen px-20 py-5">
 			<div>
@@ -14,7 +17,7 @@ export default function Ranking() {
 				<div className="flex justify-between px-5 mt-12 bg-[#1AAD8A] rounded-2xl m-3">
 					<div>
 						<h1>
-							Parabéns <span>user</span>
+							Parabéns <span>{user}</span>
 						</h1>
 						<p className="w-80">
 							🎉 Parabéns, você está em primeiro lugar na turma Lembre-se que

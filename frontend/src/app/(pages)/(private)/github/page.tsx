@@ -6,13 +6,14 @@ import { getCookie } from "cookies-next/client";
 
 export default function Github() {
 	const github_user = getCookie("github_user");
-	console.log(github_user);
+	const user = getCookie("name_user")
+
 	return (
 		<div className="bg-[#1B1E26] overflow-y-scroll flex-1 w-full h-screen px-20 py-5">
 			<div>
 				<div className="bg-[#fff] mb-15 flex justify-between h-64 rounded-4xl overflow-hidden w-full bg-cover bg-center">
 					<div className="flex text-amber-800 p-5 flex-col gap-7">
-						<h1>Olá, gabriel</h1>
+						<h1>Olá, {user}</h1>
 						<p>chegou a hora de entrar na aventura do conhecimento</p>
 					</div>
 					<img

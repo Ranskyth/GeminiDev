@@ -3,20 +3,13 @@
 import { BACKEND } from "@/config/config";
 import { AuthContext } from "@/context/auth-context";
 import { getCookie, setCookie } from "cookies-next";
-import { jwtDecode } from "jwt-decode";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { useContext } from "react";
 import { useForm } from "react-hook-form";
 import { toast, ToastContainer } from "react-toastify";
 
-interface UserToken {
-	email: string;
-	role: string;
-}
-
 export const LoginForms = () => {
-	const router = useRouter();
+	
 	const { verifyToken } = useContext(AuthContext);
 	const { register, handleSubmit } = useForm();
 
@@ -34,6 +27,7 @@ export const LoginForms = () => {
 			}
 			setCookie("auth_geminidev", resjson.token);
 			setCookie("github_user", resjson.github);
+			setCookie("name_user", resjson.nome)
 			const cookie = await getCookie("auth_geminidev");
 
 			verifyToken(String(cookie));

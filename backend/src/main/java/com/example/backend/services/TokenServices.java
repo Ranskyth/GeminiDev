@@ -26,7 +26,7 @@ public class TokenServices {
                 .withExpiresAt(expiresAt)
                 .sign(algorithm);
 
-        return new Token(jwt, user.getGithub());
+        return new Token(jwt, user.getGithub(), user.getNome());
 
     }
 

@@ -4,10 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
-import com.example.backend.model.Atributo;
 import com.example.backend.model.Turma;
-import com.example.backend.model.User;
-import com.example.backend.repository.AtributoRepository;
 import com.example.backend.repository.TurmaRepository;
 
 @Component
@@ -15,8 +12,6 @@ public class Seed implements CommandLineRunner {
     @Autowired
     private TurmaRepository turmaRepository;
 
-    @Autowired
-    private AtributoRepository atributoRepository;
 
     @Override
     public void run(String... args) throws Exception {
