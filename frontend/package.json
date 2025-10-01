@@ -10,9 +10,15 @@
     "format": "biome format ./src/* --write"
   },
   "dependencies": {
+    "@heroui/button": "^2.2.26",
+    "@heroui/input": "^2.4.27",
+    "@heroui/modal": "^2.2.23",
+    "@heroui/system": "2.4.22",
+    "@heroui/theme": "2.4.22",
     "cookies-next": "^6.1.0",
+    "framer-motion": "12.23.22",
     "jwt-decode": "^4.0.0",
-    "next": "15.4.5",
+    "next": "^15.6.0-canary.38",
     "react": "19.1.0",
     "react-dom": "19.1.0",
     "react-hook-form": "^7.62.0",
@@ -28,7 +34,6 @@
     "daisyui": "^5.0.54",
     "eslint": "^9",
     "eslint-config-next": "15.4.5",
-    "husky": "^9.1.7",
     "tailwindcss": "^4",
     "typescript": "^5"
   }

@@ -24,7 +24,6 @@ export default function Login() {
 			const data = await fetch(`${BACKEND}/api/v1/turma/all`)
 			setTurma(await data.json())
 		})()
-
 	},[])
 
 

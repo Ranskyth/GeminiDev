@@ -6,15 +6,12 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.backend.dto.LoginDto;
 import com.example.backend.dto.UserDto;
 import com.example.backend.model.Token;
-import com.example.backend.model.Turma;
 import com.example.backend.model.User;
 import com.example.backend.model.UserRole;
 import com.example.backend.repository.TurmaRepository;
 import com.example.backend.repository.UserRepository;
 import com.example.backend.services.AuthServices;
 import com.example.backend.services.TokenServices;
-
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.BadCredentialsException;
