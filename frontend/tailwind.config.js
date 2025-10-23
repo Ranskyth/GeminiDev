@@ -1,11 +1,11 @@
 // tailwind.config.js
-const {heroui} = require("@heroui/theme");
+const { heroui } = require("@heroui/theme");
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
-    "./node_modules/@heroui/theme/dist/components/(button|input|modal|ripple|spinner|form).js"
-],
+    "./node_modules/@heroui/theme/dist/components/(button|input|modal|ripple|spinner|form).js",
+  ],
   theme: {
     extend: {},
   },
