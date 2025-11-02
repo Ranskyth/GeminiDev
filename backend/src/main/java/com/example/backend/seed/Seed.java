@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
+import com.example.backend.model.Instituicao;
 import com.example.backend.model.Turma;
 import com.example.backend.repository.TurmaRepository;
 
@@ -18,10 +19,15 @@ public class Seed implements CommandLineRunner {
 
         if (turmaRepository.count() == 0) {
             Turma turma = new Turma();
+            Instituicao instituicao = new Instituicao();
+
             turma.setNome("DS 2");
+            turma.setPeriodo("Noite");
+            turma.setInstituicao(instituicao);
 
             turmaRepository.save(turma);
         }
+    
 
     }
 

@@ -2,11 +2,12 @@ package com.example.backend.model;
 
 import java.util.Collection;
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -19,6 +20,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.Builder;
 import lombok.Data;
@@ -49,17 +51,18 @@ public class User implements UserDetails {
     private UserRole role;
 
     @ManyToOne
+    @JsonIgnore
     @JoinColumn(name = "turma_id")
     private Turma turma;
 
-    @OneToMany(mappedBy = "user")
-    private List<Atributo> atributo;
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    private Atributo atributo;
 
     public User(){}
 
     
     public User(long id, String nome, String email, String senha, String github,
-            UserRole role, Turma turma, List<Atributo> atributos) {
+            UserRole role, Turma turma, Atributo atributos) {
         this.id = id;
         this.nome = nome;
         this.email = email;

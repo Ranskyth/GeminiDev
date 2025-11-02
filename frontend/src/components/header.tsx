@@ -13,27 +13,27 @@ export const Header = () => {
       </div>
       <div className="flex items-center gap-2">
         <div className="bg-[#1B1E26] w-14 flex justify-center items-center gap-1 rounded-2xl h-8">
-          <img className="w-4 h-4" src={"./gem.svg"} />
+          <img className="w-4 h-4" src={"/gem.svg"} />
           <p className="text-[12px]">0</p>
         </div>
         <div className="bg-[#1B1E26] w-14 flex justify-center items-center gap-1 rounded-2xl h-8">
-          <img className="w-4 h-4" src={"./gem-green.svg"} />
+          <img className="w-4 h-4" src={"/gem-green.svg"} />
           <p className="text-[12px]">0</p>
         </div>
         <div className="bg-[#1B1E26] w-14 flex justify-center items-center gap-1 rounded-2xl h-8">
-          <img className="w-4 h-4" src={"./gem-blue.svg"} />
+          <img className="w-4 h-4" src={"/gem-blue.svg"} />
           <p className="text-[12px]">0</p>
         </div>
         <div className="bg-[#1B1E26] w-14 flex justify-center items-center gap-1 rounded-2xl h-8">
-          <img className="w-4 h-4" src={"./escudo.svg"} />
+          <img className="w-4 h-4" src={"/escudo.svg"} />
           <p className="text-[12px]">0</p>
         </div>
         <div className="bg-[#1B1E26] w-14 flex justify-center items-center gap-1 rounded-2xl h-8">
-          <img className="w-4 h-4" src={"./star.svg"} />
+          <img className="w-4 h-4" src={"/star.svg"} />
           <p className="text-[12px]">0</p>
         </div>
         <div className="bg-[#1B1E26] w-14 flex justify-center items-center gap-1 rounded-2xl h-8">
-          <img className="w-4 h-4" src={"./dollar.svg"} />
+          <img className="w-4 h-4" src={"/dollar.svg"} />
           <p className="text-[12px]">0</p>
         </div>
         <div className="overflow-hidden w-10 rounded-[25] h-10">

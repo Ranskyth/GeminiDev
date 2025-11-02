@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.backend.dto.LoginDto;
 import com.example.backend.dto.UserDto;
+import com.example.backend.model.Atributo;
 import com.example.backend.model.Token;
 import com.example.backend.model.User;
 import com.example.backend.model.UserRole;
@@ -56,13 +57,16 @@ public class AuthController {
 
         var turma = turmaRepository.findById(userDto.getTurma()).orElseThrow(() -> new RuntimeException("Turma não encontrada"));
         User user = new User();
+        Atributo atributo = new Atributo();
+
         user.setNome(userDto.getNome());
         user.setSenha(passwordEncoder.encode(userDto.getSenha()));
         user.setEmail(userDto.getEmail());
         user.setRole(UserRole.USER);
         user.setGithub(userDto.getGithub());
         user.setTurma(turma);
-
+        atributo.setUser(user);
+        user.setAtributo(atributo);
         return userRepository.save(user);
 
     }
