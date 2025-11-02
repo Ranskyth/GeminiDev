@@ -38,25 +38,34 @@ export default function Turmas() {
   }, [turma]);
   return (
     <>
-	<div className="mt-5 ml-15">
-
-      <div className="flex">
-        <input className="border-2 p-2 rounded-2xl w-300 h-10" type="text" />
-        <button
-          onClick={onOpen}
-          className="h-10 rounded-[10px] flex items-center text-center px-5 font-bold bg-[#9B32EF] hover:bg-[#9B32EF]/80 active:bg-[#9b32ef]/60"
-        >
-          Adicionar Turma
-        </button>
-      </div>
-
+      <div className="mt-5 ml-15">
+        <div className="flex">
+          <input className="border-2 p-2 rounded-2xl w-300 h-10" type="text" />
+          <button
+            onClick={onOpen}
+            className="h-10 rounded-[10px] flex items-center text-center px-5 font-bold bg-[#9B32EF] hover:bg-[#9B32EF]/80 active:bg-[#9b32ef]/60"
+          >
+            Adicionar Turma
+          </button>
+        </div>
 
         <ul className="mt-5 flex gap-5 flex-col">
-          {listTurma.map((turma, index) => (
-            <li className="bg-red-500 rounded-2xl p-5 uppercase" key={index}>{turma.nome}</li>
+          {listTurma?.map((turma, index) => (
+            <li
+              className="bg-[#313640] items-center flex rounded-2xl p-5 uppercase justify-between"
+              key={index}
+            >
+              <h1>{turma.nome}</h1>
+              <div className="flex gap-5">
+                <button className="bg-[#1B1E26] p-2 rounded-2xl w-25">
+                  Editar
+                </button>
+                <button>Remover</button>
+              </div>
+            </li>
           ))}
         </ul>
-	</div>
+      </div>
 
       <Modal
         className="top-50 w-280 absolute p-5 bg-[#313640]"
@@ -87,7 +96,9 @@ export default function Turmas() {
                 </button>
                 <button
                   className="h-10 rounded-[10px] flex items-center text-center px-5 font-bold bg-[#32c3ef] hover:bg-[#32c3ef]/80 active:bg-[#32c3ef]/60"
-                  onClick={() => {turmaServices.createTurma(String(turma)), window.rel}}
+                  onClick={() => {
+                    turmaServices.createTurma(String(turma));
+                  }}
                 >
                   Action
                 </button>
