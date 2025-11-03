@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 @RequestMapping("/api/v1/auth")
 @RestController
+
 public class AuthController {
 
 
@@ -42,7 +43,7 @@ public class AuthController {
     AuthController(TurmaRepository turmaRepository) {
         this.turmaRepository = turmaRepository;
     }
-
+    
     @PostMapping("/login")
     public Token Login(@RequestBody LoginDto loginDto) {
         User user = (User) authService.loadUserByUsername(loginDto.getEmail());

@@ -10,32 +10,6 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const { auth, verifyToken } = useContext(AuthContext);
-
-  const token = getCookie("auth_geminidev");
-
-  useEffect(() => {
-    verifyToken(String(token));
-    console.log(token);
-  }, [auth]);
-
-  console.log(auth);
-
-  if (auth == undefined) {
-    return (
-      <div className="flex justify-center items-center h-screen">
-        <span className="loading loading-spinner loading-xl"></span>
-      </div>
-    );
-  }
-
-  if (auth == false) {
-    return (
-      <div className="flex justify-center items-center h-screen">
-        <h1 className="text-2xl font-semibold">Usuario Não Autenticado</h1>
-      </div>
-    );
-  }
 
   return (
     <div>

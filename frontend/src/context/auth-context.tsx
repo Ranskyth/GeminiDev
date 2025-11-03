@@ -29,12 +29,12 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       const decodeToken: UserToken = await jwtDecode(token);
 
       setAuth(true);
-
+      
       if (decodeToken.role != "ADMIN") {
         return router.push("/dashboard");
       }
-
-      return router.push("/admin/dasboard");
+      
+      return router.push("/admin/dashboard");
     })();
   };
 

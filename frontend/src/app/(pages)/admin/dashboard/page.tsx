@@ -8,27 +8,33 @@ import { getCookie } from "cookies-next";
 export default function AdminHome() {
   const [userqt, setUserqt] = useState<number>(0);
   const [turmaqt, setTurmaqt] = useState<number>(0);
+  const [instituicaoqt, setInstituicaoqt] = useState<number>(0);
   useEffect(() => {
     (async () => {
       const token = getCookie("auth_geminidev");
-      const data = await fetch(`${BACKEND}/api/v1/user/qt`, {
+      const qtAlunos = await fetch(`${BACKEND}/api/v1/user/qt`, {
         method: "GET",
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
-      const data2 = await fetch(`${BACKEND}/api/v1/turma/qt`, {
+      const qtTurmas = await fetch(`${BACKEND}/api/v1/turma/qt`, {
         method: "GET",
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
 
-      const json = await data.json();
-      const json2 = await data2.json();
+      const qtInstuicao = await fetch(`${BACKEND}/api/v1/turma/qt`, {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
 
-      setUserqt(json);
-      setTurmaqt(json2);
+      setUserqt(await qtAlunos.json());
+      setTurmaqt(await qtTurmas.json());
+      setInstituicaoqt(await qtInstuicao.json());
     })();
   }, []);
 
@@ -38,7 +44,7 @@ export default function AdminHome() {
       <h1 className="text-[#ffffff] text-3xl text-center my-5">
         Painel do Administrador
       </h1>
-      <div className="grid w-full grid-cols-4 gap-5 px-12">
+      <div className="grid w-full grid-cols-3 gap-5 px-12">
         <CardsAdmin
           description="Quantidade de Usuarios"
           subdescription={String(userqt)}
@@ -47,8 +53,10 @@ export default function AdminHome() {
           description="Quantidade de Turmas"
           subdescription={String(turmaqt)}
         />
-        <CardsAdmin />
-        <CardsAdmin />
+        <CardsAdmin
+          description="Quantidade de Instituições Cadastradas"
+          subdescription={String(instituicaoqt)}
+        />
       </div>
     </div>
   );

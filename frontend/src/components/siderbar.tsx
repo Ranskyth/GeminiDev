@@ -39,8 +39,17 @@ export const SiderbarAdmin = () => {
       <Button href={"/admin/dashboard"} active={params == "/admin/dashboard"}>
         Dashboard
       </Button>
+            <Button href={"/admin/instituicao"} active={params == "/admin/instituicao"}>
+        Instituição
+      </Button>
       <Button href={"/admin/turmas"} active={params == "/admin/turmas"}>
         Turmas
+      </Button>
+            <Button href={"/admin/missoes"} active={params == "/admin/missoes"}>
+        Missoes
+      </Button>
+            <Button href={"/admin/loja"} active={params == "/admin/loja"}>
+        Loja
       </Button>
     </div>
   );

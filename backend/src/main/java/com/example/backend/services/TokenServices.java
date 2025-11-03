@@ -14,7 +14,7 @@ import com.example.backend.model.UserRole;
 
 @Service
 public class TokenServices {
-    private Instant expiresAt = LocalDateTime.now().plusMinutes(120).toInstant(ZoneOffset.ofHours(-3));
+    private Instant expiresAt = LocalDateTime.now().plusMinutes(25520).toInstant(ZoneOffset.ofHours(-3));
 
     private Algorithm algorithm = Algorithm.HMAC256("secret");
 

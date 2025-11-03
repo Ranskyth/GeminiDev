@@ -1,6 +1,4 @@
 "use client";
-import { auth_geminidev } from "@/app/token/tokens";
-import { BACKEND } from "@/config/config";
 import { turmaServices } from "@/services/turmaServices";
 
 import {
@@ -20,10 +18,7 @@ export type User = {
   github: String;
   turma: String;
 };
-interface InstituicaoList{
-  id: number
-  nome: string
-}
+
 export type TurmaList = {
   nome: string;
   user: User;
@@ -31,22 +26,13 @@ export type TurmaList = {
 };
 
 export default function Turmas() {
-  const [turma, setTurma] = useState<{}>({ turma: "", periodo:"", instituicao:0});
+  const [turma, setTurma] = useState<{}>({ turma: "" });
   const [listTurma, setListTurma] = useState<TurmaList[]>([]);
-  const [listInstituicao, setListInstituicao] = useState<InstituicaoList[]>([])
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
-
-  console.log(listInstituicao)
-
-  const handleTurmassss = (key: string, value: any) => {
-    setTurma((prev) => ({...prev, [key]: value}))
-  }
 
   useEffect(() => {
     (async () => {
       const data = await turmaServices.getTurmaAll();
-      const instituicoesFetch = await fetch(`${BACKEND}/api/v1/instituicao/all`, {headers:{"Authorization":`Bearer ${auth_geminidev}`}}).then(res => res.json()).catch(err => err)
-      setListInstituicao(instituicoesFetch)
       setListTurma(data);
     })();
   }, [turma]);
@@ -82,7 +68,7 @@ export default function Turmas() {
       </div>
 
       <Modal
-        className="top-50 w-280 absolute p-5 bg-[#161618]"
+        className="top-50 w-280 absolute p-5 bg-[#313640]"
         isOpen={isOpen}
         onOpenChange={onOpenChange}
       >
@@ -95,22 +81,11 @@ export default function Turmas() {
               <ModalBody className="flex w-full flex-wrap md:flex-nowrap gap-4">
                 <input
                   onChange={(value) =>
-                    handleTurmassss("turma", value.currentTarget.value)
+                    setTurma(String(value.currentTarget.value))
                   }
                   className="max-w-xs h-10 pl-4  rounded-2xl border-1"
                   placeholder="Nome Da Turma"
                 />
-                                <input
-                  onChange={(value) =>
-                    handleTurmassss("periodo", value.currentTarget.value)
-                  }
-                  className="max-w-xs h-10 pl-4  rounded-2xl border-1"
-                  placeholder="Periodo da Turma"
-                />  
-                <select onChange={(e) => handleTurmassss("instituicao",Number(e.target.value))} name="" id="">
-                  <option className="bg-[#000]" value="">selecione uma instituição</option>
-                  {listInstituicao.map(instituicao => <option className="bg-[#000]" value={instituicao.id} key={instituicao.id}>{instituicao.nome}</option>)}
-                </select>
               </ModalBody>
               <ModalFooter className="gap-4 mb-5">
                 <button
@@ -122,7 +97,7 @@ export default function Turmas() {
                 <button
                   className="h-10 rounded-[10px] flex items-center text-center px-5 font-bold bg-[#32c3ef] hover:bg-[#32c3ef]/80 active:bg-[#32c3ef]/60"
                   onClick={() => {
-                    turmaServices.createTurma(turma);
+                    turmaServices.createTurma(String(turma));
                   }}
                 >
                   Action

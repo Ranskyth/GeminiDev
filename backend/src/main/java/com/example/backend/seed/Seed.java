@@ -23,7 +23,7 @@ public class Seed implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
 
-        if (turmaRepository.count() == 0) {
+        if (turmaRepository.count() == 0 && instituicaoRepository.count() == 0) {
             Turma turma = new Turma();
             Instituicao instituicao = new Instituicao();
             instituicao.setNome("ETEC");
