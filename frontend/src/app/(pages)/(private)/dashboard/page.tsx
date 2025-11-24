@@ -2,17 +2,34 @@
 
 import { CardMissao } from "@/components/card-missao";
 import { CardVazio } from "@/components/card-vazio";
+import { getAllAtributos, getByIdAtributos, getUser, getUserById } from "@/lib/api/generated";
+import { Atributo } from "@/lib/api/model";
+import { getUserCookie, getUserTokenDecode } from "@/lib/auth";
+
 import { getCookie } from "cookies-next";
+import { useEffect, useState } from "react";
 
 export default function Dashboard() {
-  const user = getCookie("name_user");
+  const [atributos, setAtributos] = useState<Atributo>()
+
+  const user = getUserTokenDecode()
+  const { name } = getUserCookie()
+
+  useEffect(() => {
+    (async () => {
+      const {data: userById} = await getUserById({id: Number(user.sub)})
+
+      const {data: atributos} = await getByIdAtributos(Number(userById.atributo?.id))
+      setAtributos(atributos)
+    })()
+  },[])
   return (
     <div className="bg-[#1B1E26] flex-1 w-full h-screen px-10 py-5">
       <div>
         <div className="bg-[#9A32EF] mb-5 rounded-[0.50rem] h-42 flex justify-between px-5">
           <div className="flex justify-center flex-col gap-3">
             <h1>
-              Olá, <span className="text-[1.2rem] font-bold">{user}</span>
+              Olá, <span className="text-[1.2rem] font-bold">{name}</span>
             </h1>
             <p>
               chegou a hora de entrar na aventura <p>no conecimento</p>
@@ -35,7 +52,7 @@ export default function Dashboard() {
               />
             </div>
 
-            <h1>0</h1>
+            <h1>{atributos?.xp}</h1>
             <p>essa é a sua avaliação no sistema</p>
           </div>
           <div className="text-center content-center">
@@ -44,7 +61,7 @@ export default function Dashboard() {
               src="https://geminidev.com.br/images/assets/coin_copper.png"
               alt=""
             />
-            <h1>0</h1>
+            <h1>{atributos?.moedas}</h1>
             <p>use para comprar itens na loja</p>
           </div>
           <div className="text-center content-center">

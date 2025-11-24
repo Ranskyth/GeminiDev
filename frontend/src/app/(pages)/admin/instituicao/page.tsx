@@ -1,7 +1,11 @@
 "use client";
-import { instituicaoServices } from "@/services/instituicaoServices";
-import { turmaServices } from "@/services/turmaServices";
 
+import {
+  createInstituicaos,
+  deleteInstituicaos,
+  getAllInstituicaos,
+} from "@/lib/api/generated";
+import { Instituicao } from "@/lib/api/model";
 import {
   Modal,
   ModalBody,
@@ -12,56 +16,62 @@ import {
 } from "@heroui/modal";
 import { useEffect, useState } from "react";
 
-export type User = {
-  nome: String;
-  email: String;
-  senha: String;
-  github: String;
-  turma: String;
-};
-
-export type TurmaList = {
-  nome: string;
-  user: User;
-  id: 1;
-};
-
 export default function Turmas() {
-  const [turma, setTurma] = useState<{}>({ turma: "" });
-  const [listTurma, setListTurma] = useState<TurmaList[]>([]);
+  const [instituicao, setInstituicao] = useState<string>();
+  const [listInstituicao, setListInstituicao] = useState<Instituicao[]>([]);
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
+  const loadInstituicao = async () => {
+    const { data } = await getAllInstituicaos();
+    setListInstituicao(data);
+  };
+
+  const handleCreateInstituicao = async (nome: string) => {
+    await createInstituicaos({ nome });
+    await loadInstituicao();
+  };
+  const handleDeleteInstituicao = async (instituicao: Instituicao) => {
+    const { data } = await deleteInstituicaos(Number(instituicao.id));
+    console.log(data);
+    loadInstituicao();
+  };
   useEffect(() => {
-    (async () => {
-      const data = await instituicaoServices.getInstituicaoAll();
-      setListTurma(data);
-    })();
-  }, [turma]);
+    loadInstituicao();
+  }, []);
+
   return (
     <>
-      <div className="mt-5 ml-15">
-        <div className="flex">
-          <input className="border-2 p-2 rounded-2xl w-300 h-10" type="text" />
+      <div className="my-5 w-screen mx-15">
+        <div className="flex gap-5">
+          <input
+            className="border-2 p-2 rounded-2xl w-[80%] h-10"
+            type="text"
+          />
           <button
             onClick={onOpen}
             className="h-10 rounded-[10px] flex items-center text-center px-5 font-bold bg-[#9B32EF] hover:bg-[#9B32EF]/80 active:bg-[#9b32ef]/60"
           >
-            Adicionar Turma
+            Adicionar Instituição
           </button>
         </div>
 
-        <ul className="mt-5 flex gap-5 flex-col">
-          {listTurma?.map((turma, index) => (
+        <ul className="mt-5 flex gap-5 flex-col h-[70vh]  overflow-x-hidden">
+          {listInstituicao?.map((instituicao, index) => (
             <li
               className="bg-[#313640] items-center flex rounded-2xl p-5 uppercase justify-between"
               key={index}
             >
-              <h1>{turma.nome}</h1>
+              <h1>{instituicao.nome}</h1>
               <div className="flex gap-5">
                 <button className="bg-[#1B1E26] p-2 rounded-2xl w-25">
                   Editar
                 </button>
-                <button>Remover</button>
+                <button
+                  onClick={() => handleDeleteInstituicao(instituicao)}
+                  className="bg-[#1B1E26] p-2 rounded-2xl w-25"
+                >
+                  Remover
+                </button>
               </div>
             </li>
           ))}
@@ -69,7 +79,7 @@ export default function Turmas() {
       </div>
 
       <Modal
-        className="top-50 w-280 absolute p-5 bg-[#313640]"
+        className="top-50 p-5 bg-[#000000] h-fit w-[75%]"
         isOpen={isOpen}
         onOpenChange={onOpenChange}
       >
@@ -77,15 +87,15 @@ export default function Turmas() {
           {(onClose) => (
             <>
               <ModalHeader className="mt-10">
-                <h1>Adicionar Turma</h1>
+                <h1>Adicionar Instituição</h1>
               </ModalHeader>
               <ModalBody className="flex w-full flex-wrap md:flex-nowrap gap-4">
                 <input
                   onChange={(value) =>
-                    setTurma(String(value.currentTarget.value))
+                    setInstituicao(String(value.currentTarget.value))
                   }
                   className="max-w-xs h-10 pl-4  rounded-2xl border-1"
-                  placeholder="Nome Da Turma"
+                  placeholder="Nome Da Instituição"
                 />
               </ModalBody>
               <ModalFooter className="gap-4 mb-5">
@@ -97,9 +107,7 @@ export default function Turmas() {
                 </button>
                 <button
                   className="h-10 rounded-[10px] flex items-center text-center px-5 font-bold bg-[#32c3ef] hover:bg-[#32c3ef]/80 active:bg-[#32c3ef]/60"
-                  onClick={() => {
-                    instituicaoServices.createInstituicao(String(turma));
-                  }}
+                  onClick={() => handleCreateInstituicao(String(instituicao))}
                 >
                   Action
                 </button>

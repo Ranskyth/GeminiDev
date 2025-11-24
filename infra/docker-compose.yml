@@ -1,3 +1,4 @@
+name: "gemini_dev-developer"
 services:
   mysql:
     image: mysql

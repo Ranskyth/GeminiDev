@@ -1,6 +1,12 @@
 "use client";
-import { turmaServices } from "@/services/turmaServices";
 
+import {
+  createMissoes,
+  deleteMissoes,
+  findAlMissoes,
+} from "@/lib/api/generated";
+
+import { Missoes } from "@/lib/api/model";
 import {
   Modal,
   ModalBody,
@@ -9,102 +15,183 @@ import {
   ModalHeader,
   useDisclosure,
 } from "@heroui/modal";
+
 import { useEffect, useState } from "react";
 
-export type User = {
-  nome: String;
-  email: String;
-  senha: String;
-  github: String;
-  turma: String;
-};
-
-export type TurmaList = {
-  nome: string;
-  user: User;
-  id: 1;
-};
-
-export default function Turmas() {
-  const [turma, setTurma] = useState<{}>({ turma: "" });
-  const [listTurma, setListTurma] = useState<TurmaList[]>([]);
+export default function MissoesPage() {
+  const [nome, setNome] = useState("");
+  const [descricao, setDescricao] = useState("");
+  const [moedasRecompensa, setMoedasRecompensa] = useState(0);
+  const [diamantesRecompensa, setDiamantesRecompensa] = useState(0);
+  const [esmeraldasRecompensa, setEsmeraldasRecompensa] = useState(0);
+  const [rubysRecompensa, setRubysRecompensa] = useState(0);
+  const [turmaId, setTurmaId] = useState(0);
+  const [xp, setXp] = useState(0);
+  const [listMissoes, setListMissoes] = useState<Missoes[]>([]);
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
+  const loadMissoes = async () => {
+    const { data } = await findAlMissoes();
+    setListMissoes(data);
+  };
+
+  const handleCreateMissao = async () => {
+    await createMissoes({
+      nome,
+      descricao,
+      xpRecompensa: xp,
+      moedasRecompensa,
+      diamantesRecompensa,
+      esmeraldasRecompensa,
+      rubysRecompensa,
+      turmaId,
+    });
+
+    setNome("");
+    setDescricao("");
+    setXp(0);
+
+    await loadMissoes();
+    onOpenChange();
+  };
+
+  const handleDeleteMissao = async (id: number) => {
+    await deleteMissoes(id);
+    await loadMissoes();
+  };
+
   useEffect(() => {
-    (async () => {
-      const data = await turmaServices.getTurmaAll();
-      setListTurma(data);
-    })();
-  }, [turma]);
+    loadMissoes();
+  }, []);
+
   return (
     <>
-      <div className="mt-5 ml-15">
-        <div className="flex">
-          <input className="border-2 p-2 rounded-2xl w-300 h-10" type="text" />
+      <div className="my-5 w-screen mx-15">
+        <div className="flex gap-5">
+          <input
+            className="border-2 p-2 rounded-2xl w-[80%] h-10"
+            type="text"
+          />
           <button
             onClick={onOpen}
-            className="h-10 rounded-[10px] flex items-center text-center px-5 font-bold bg-[#9B32EF] hover:bg-[#9B32EF]/80 active:bg-[#9b32ef]/60"
+            className="h-10 px-5 bg-[#9B32EF] rounded-[10px]"
           >
-            Adicionar Turma
+            Criar Missão
           </button>
         </div>
 
         <ul className="mt-5 flex gap-5 flex-col">
-          {listTurma?.map((turma, index) => (
+          {listMissoes.map((m) => (
             <li
-              className="bg-[#313640] items-center flex rounded-2xl p-5 uppercase justify-between"
-              key={index}
+              className="bg-[#313640] p-5 rounded-2xl flex justify-between"
+              key={m.id}
             >
-              <h1>{turma.nome}</h1>
-              <div className="flex gap-5">
-                <button className="bg-[#1B1E26] p-2 rounded-2xl w-25">
-                  Editar
-                </button>
-                <button>Remover</button>
-              </div>
+              <h1>
+                {m.nome} — {m.xpRecompensa} XP
+              </h1>
+              <button
+                onClick={() => handleDeleteMissao(m.id!)}
+                className="bg-[#1B1E26] p-2 rounded-2xl"
+              >
+                Remover
+              </button>
             </li>
           ))}
         </ul>
       </div>
 
       <Modal
-        className="top-50 w-280 absolute p-5 bg-[#313640]"
+        className="top-40 p-5 bg-[#000000] h-fit w-[75%]"
         isOpen={isOpen}
         onOpenChange={onOpenChange}
       >
         <ModalContent>
-          {(onClose) => (
-            <>
-              <ModalHeader className="mt-10">
-                <h1>Adicionar Turma</h1>
-              </ModalHeader>
-              <ModalBody className="flex w-full flex-wrap md:flex-nowrap gap-4">
-                <input
-                  onChange={(value) =>
-                    setTurma(String(value.currentTarget.value))
-                  }
-                  className="max-w-xs h-10 pl-4  rounded-2xl border-1"
-                  placeholder="Nome Da Turma"
-                />
-              </ModalBody>
-              <ModalFooter className="gap-4 mb-5">
-                <button
-                  className="h-10 rounded-[10px] flex items-center text-center px-5 font-bold bg-[#ef3232] hover:bg-[#ef3232]/80 active:bg-[#ef3232]/60"
-                  onClick={onClose}
-                >
-                  Close
-                </button>
-                <button
-                  className="h-10 rounded-[10px] flex items-center text-center px-5 font-bold bg-[#32c3ef] hover:bg-[#32c3ef]/80 active:bg-[#32c3ef]/60"
-                  onClick={() => {
-                    turmaServices.createTurma(String(turma));
-                  }}
-                >
-                  Action
-                </button>
-              </ModalFooter>
-            </>
-          )}
+          <>
+            <ModalHeader className="mt-10">Criar Missão</ModalHeader>
+            <ModalBody className="flex flex-col gap-4">
+              <input
+                value={nome}
+                onChange={(e) => setNome(e.target.value)}
+                className="h-10 pl-4 rounded-2xl border-1"
+                placeholder="Nome"
+              />
+              <input
+                value={descricao}
+                onChange={(e) => setDescricao(e.target.value)}
+                className="h-10 pl-4 rounded-2xl border-1"
+                placeholder="Descrição"
+              />
+              <div className="flex gap-5">
+                <div className="flex-1">
+                  <label className="block" htmlFor="">
+                    Moedas 
+                  </label>
+                  <input
+                    value={xp}
+                    type="number"
+                    onChange={(e) => setXp(Number(e.target.value))}
+                    className="h-10 w-full pl-4 rounded-[10px] border-1"
+                    placeholder="XP"
+                  />
+                </div>
+
+                <div className="flex-1">
+                  <label className="block" htmlFor="">
+                    Diamantes
+                  </label>
+                  <input
+                    value={xp}
+                    type="number"
+                    onChange={(e) => setXp(Number(e.target.value))}
+                    className="h-10 w-full pl-4 rounded-[10px] border-1"
+                    placeholder="XP"
+                  />
+                </div>
+                <div className="flex-1">
+                  <label className="block" htmlFor="">
+                    Rubys
+                  </label>
+                  <input
+                    value={xp}
+                    type="number"
+                    onChange={(e) => setXp(Number(e.target.value))}
+                    className="h-10 w-full pl-4 rounded-[10px] border-1"
+                    placeholder="XP"
+                  />
+                </div>
+                <div className="flex-1">
+                  <label className="block" htmlFor="">
+                    Esmeraldas
+                  </label>
+                  <input
+                    value={xp}
+                    type="number"
+                    onChange={(e) => setXp(Number(e.target.value))}
+                    className="h-10 w-full pl-4 rounded-[10px] border-1"
+                    placeholder="XP"
+                  />
+                </div>
+              </div>
+              <select className="mb-5 border-2 rounded-2xl p-5" name="" id="">
+                <option value="">Nenhum</option>
+              </select>
+            </ModalBody>
+
+            <ModalFooter className="gap-4 mb-5">
+              <button
+                className="h-10 px-5 bg-[#ef3232] rounded-[10px]"
+                onClick={onOpenChange}
+              >
+                Cancelar
+              </button>
+              <button
+                className="h-10 px-5 bg-[#32c3ef] rounded-[10px]"
+                onClick={handleCreateMissao}
+              >
+                Criar
+              </button>
+            </ModalFooter>
+          </>
         </ModalContent>
       </Modal>
     </>

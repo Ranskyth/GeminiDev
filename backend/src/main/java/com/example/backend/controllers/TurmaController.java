@@ -9,12 +9,14 @@ import com.example.backend.model.Turma;
 import com.example.backend.repository.InstituicaoRepository;
 import com.example.backend.repository.TurmaRepository;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 
 @RequestMapping("/api/v1/turma")
@@ -25,10 +27,10 @@ public class TurmaController {
     private TurmaRepository turmaRepository;
 
     @Autowired
-    InstituicaoRepository instituicaoRepository;
+    private InstituicaoRepository instituicaoRepository;
 
     @GetMapping("/all")
-    public List<Turma> getMethodName() {
+    public List<Turma> getAllTurma() {
         return turmaRepository.findAll();
     }
 
@@ -39,19 +41,38 @@ public class TurmaController {
 
     @PostMapping
     public Turma createTurma(@RequestBody TurmaDto turmaDto) {
-        var instituicaoss = instituicaoRepository.findById(turmaDto.getInstituicao())
-                .orElseThrow(() -> new RuntimeException("Error na busca"));
+        Instituicao instituicao = instituicaoRepository.findById(turmaDto.getInstituicao())
+                .orElseThrow(() -> new RuntimeException("Instituição não encontrada"));
+
         Turma turma = new Turma();
-        Instituicao instituicao = new Instituicao();
         turma.setNome(turmaDto.getTurma());
         turma.setPeriodo(turmaDto.getPeriodo());
-        List<Turma> listTurma = new ArrayList<>();
+        turma.setInstituicao(instituicao);
 
-        listTurma.add(turma);
-
-        turma.setInstituicao(instituicaoss);
-        instituicao.setTurma(listTurma);
         return turmaRepository.save(turma);
     }
 
+    @PutMapping("/{id}")
+    public Turma updateTurma(@PathVariable Long id, @RequestBody TurmaDto turmaDto) {
+        Turma turma = turmaRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Turma não encontrada"));
+
+        Instituicao instituicao = instituicaoRepository.findById(turmaDto.getInstituicao())
+                .orElseThrow(() -> new RuntimeException("Instituição não encontrada"));
+
+        turma.setNome(turmaDto.getTurma());
+        turma.setPeriodo(turmaDto.getPeriodo());
+        turma.setInstituicao(instituicao);
+
+        return turmaRepository.save(turma);
+    }
+
+    @DeleteMapping("/{id}")
+    public String deleteTurma(@PathVariable Long id) {
+        Turma turma = turmaRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Turma não encontrada"));
+
+        turmaRepository.delete(turma);
+        return "Turma deletada com sucesso";
+    }
 }

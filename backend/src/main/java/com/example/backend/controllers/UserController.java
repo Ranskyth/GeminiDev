@@ -5,7 +5,6 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 import com.example.backend.dto.UserDto;
-import com.example.backend.model.Atributo;
 import com.example.backend.model.User;
 import com.example.backend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,9 +32,9 @@ public class UserController {
         return userRepository.count();
     }
 
-    @GetMapping
-    public ResponseEntity<User> getUserByEmail(@RequestParam String email) {
-        return userRepository.findByEmail(email).map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
+    @GetMapping("")
+    public ResponseEntity<User> getUserById(@RequestParam long id) {
+        return userRepository.findById(id).map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
     }
 
     @PostMapping

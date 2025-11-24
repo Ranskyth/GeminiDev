@@ -1,5 +1,4 @@
 "use client";
-import { turmaServices } from "@/services/turmaServices";
 
 import {
   Modal,
@@ -9,102 +8,156 @@ import {
   ModalHeader,
   useDisclosure,
 } from "@heroui/modal";
+
 import { useEffect, useState } from "react";
 
-export type User = {
-  nome: String;
-  email: String;
-  senha: String;
-  github: String;
-  turma: String;
-};
+export default function Loja() {
+  const [lojaItens, setLojaItens] = useState<any[]>([]);
+  const [itens, setItens] = useState<any[]>([]);
 
-export type TurmaList = {
-  nome: string;
-  user: User;
-  id: 1;
-};
+  const [itemSelecionado, setItemSelecionado] = useState<number | undefined>();
+  const [preco, setPreco] = useState<number>(0);
+  const [tipoMoeda, setTipoMoeda] = useState<string>("");
 
-export default function Turmas() {
-  const [turma, setTurma] = useState<{}>({ turma: "" });
-  const [listTurma, setListTurma] = useState<TurmaList[]>([]);
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
+  const loadLoja = async () => {
+    //const { data } = await getAllLojaItem();
+    //setLojaItens(data);
+  };
+
+  const loadItens = async () => {
+    //const { data } = await getAllItens();
+    //setItens(data);
+  };
+
+  const handleCreate = async () => {
+    if (!itemSelecionado || preco <= 0 || !tipoMoeda.trim()) return;
+
+    //await createLojaItem({
+    //  item: itemSelecionado,
+    //  preco,
+    //  tipoMoeda,
+    //});
+
+    setItemSelecionado(undefined);
+    setPreco(0);
+    setTipoMoeda("");
+
+    await loadLoja();
+    onOpenChange();
+  };
+
+  const handleDelete = async (id: number) => {
+    //await deleteLojaItem(id);
+    await loadLoja();
+  };
+
   useEffect(() => {
-    (async () => {
-      const data = await turmaServices.getTurmaAll();
-      setListTurma(data);
-    })();
-  }, [turma]);
+    loadLoja();
+    loadItens();
+  }, []);
+
   return (
     <>
-      <div className="mt-5 ml-15">
-        <div className="flex">
-          <input className="border-2 p-2 rounded-2xl w-300 h-10" type="text" />
+      <div className="my-5 w-screen mx-15">
+        <div className="flex gap-5">
+          <input
+            className="border-2 p-2 rounded-2xl w-[80%] h-10"
+            type="text"
+            placeholder="Pesquisar item..."
+          />
+
           <button
             onClick={onOpen}
-            className="h-10 rounded-[10px] flex items-center text-center px-5 font-bold bg-[#9B32EF] hover:bg-[#9B32EF]/80 active:bg-[#9b32ef]/60"
+            className="h-10 rounded-[10px] px-5 font-bold bg-[#9B32EF] hover:bg-[#9B32EF]/80"
           >
-            Adicionar Turma
+            Adicionar Item na Loja
           </button>
         </div>
 
-        <ul className="mt-5 flex gap-5 flex-col">
-          {listTurma?.map((turma, index) => (
+        <ul className="mt-5 flex flex-col gap-5">
+          {lojaItens.map((loja) => (
             <li
-              className="bg-[#313640] items-center flex rounded-2xl p-5 uppercase justify-between"
-              key={index}
+              key={loja.id}
+              className="bg-[#313640] p-5 rounded-2xl flex justify-between items-center"
             >
-              <h1>{turma.nome}</h1>
-              <div className="flex gap-5">
-                <button className="bg-[#1B1E26] p-2 rounded-2xl w-25">
-                  Editar
-                </button>
-                <button>Remover</button>
+              <div>
+                <h1 className="font-bold uppercase">
+                  {loja.item?.nome}
+                </h1>
+                <p>Preço: {loja.preco}</p>
+                <p>Moeda: {loja.tipoMoeda}</p>
               </div>
+
+              <button
+                onClick={() => handleDelete(loja.id!)}
+                className="bg-[#1B1E26] p-2 rounded-2xl"
+              >
+                Remover
+              </button>
             </li>
           ))}
         </ul>
       </div>
 
       <Modal
-        className="top-50 w-280 absolute p-5 bg-[#313640]"
+        className="top-50 p-5 bg-[#000000] h-fit w-[75%]"
         isOpen={isOpen}
         onOpenChange={onOpenChange}
       >
         <ModalContent>
-          {(onClose) => (
-            <>
-              <ModalHeader className="mt-10">
-                <h1>Adicionar Turma</h1>
-              </ModalHeader>
-              <ModalBody className="flex w-full flex-wrap md:flex-nowrap gap-4">
-                <input
-                  onChange={(value) =>
-                    setTurma(String(value.currentTarget.value))
-                  }
-                  className="max-w-xs h-10 pl-4  rounded-2xl border-1"
-                  placeholder="Nome Da Turma"
-                />
-              </ModalBody>
-              <ModalFooter className="gap-4 mb-5">
-                <button
-                  className="h-10 rounded-[10px] flex items-center text-center px-5 font-bold bg-[#ef3232] hover:bg-[#ef3232]/80 active:bg-[#ef3232]/60"
-                  onClick={onClose}
-                >
-                  Close
-                </button>
-                <button
-                  className="h-10 rounded-[10px] flex items-center text-center px-5 font-bold bg-[#32c3ef] hover:bg-[#32c3ef]/80 active:bg-[#32c3ef]/60"
-                  onClick={() => {
-                    turmaServices.createTurma(String(turma));
-                  }}
-                >
-                  Action
-                </button>
-              </ModalFooter>
-            </>
-          )}
+          <>
+            <ModalHeader className="mt-10">
+              <h1>Adicionar Item à Loja</h1>
+            </ModalHeader>
+
+            <ModalBody className="flex flex-col gap-4">
+              <select
+                value={itemSelecionado}
+                onChange={(e) => setItemSelecionado(Number(e.target.value))}
+                className="h-10 pl-4 rounded-2xl border"
+              >
+                <option value="">Selecione um item</option>
+                {itens.map((item) => (
+                  <option key={item.id} value={item.id}>
+                    {item.nome}
+                  </option>
+                ))}
+              </select>
+
+              <input
+                type="number"
+                value={preco}
+                onChange={(e) => setPreco(Number(e.target.value))}
+                className="h-10 pl-4 rounded-2xl border"
+                placeholder="Preço"
+              />
+
+              <input
+                value={tipoMoeda}
+                onChange={(e) => setTipoMoeda(e.target.value)}
+                className="h-10 pl-4 rounded-2xl border"
+                placeholder="Tipo da Moeda (ex: moedas, diamantes)"
+              />
+            </ModalBody>
+
+            <ModalFooter className="gap-4 mb-5">
+              <button
+                className="h-10 px-5 bg-[#ef3232] rounded-[10px]"
+                onClick={onOpenChange}
+              >
+                Cancelar
+              </button>
+
+              <button
+                className="h-10 px-5 bg-[#32c3ef] rounded-[10px]"
+                onClick={handleCreate}
+              >
+                Criar
+              </button>
+            </ModalFooter>
+          </>
         </ModalContent>
       </Modal>
     </>

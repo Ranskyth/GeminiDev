@@ -2,26 +2,25 @@
 "use client";
 
 import { BACKEND } from "@/config/config";
+import { getAllInstituicaos, getAllTurma } from "@/lib/api/generated";
+import { Instituicao, Turma } from "@/lib/api/model";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 import { useForm } from "react-hook-form";
 import { toast, ToastContainer } from "react-toastify";
 
-interface ITurmaProps {
-  id: number;
-  nome: string;
-}
-
 export default function Login() {
   const { register, handleSubmit } = useForm();
-  const [turma, setTurma] = useState<[ITurmaProps]>([{} as ITurmaProps]);
+  const [turma, setTurma] = useState<Turma[]>([{} as Turma]);
+  const [instituicao, setInstituicao] = useState<Instituicao[]>()
   const router = useRouter();
 
   useEffect(() => {
     (async () => {
-      const data = await fetch(`${BACKEND}/api/v1/turma/all`);
-      setTurma(await data.json());
+
+      const {data: instituicao} = await getAllInstituicaos()
+      setInstituicao(instituicao)
     })();
   }, []);
 
@@ -39,7 +38,7 @@ export default function Login() {
 
     setTimeout(() => {
       router.back();
-    }, 5000);
+    }, 2000);
   };
 
   return (
@@ -89,11 +88,10 @@ export default function Login() {
             <option className="bg-[#222533]" value="">
               Selecione uma diciplinas
             </option>
-            {turma?.map((x) => (
-              <option className="bg-[#222533]" key={x.id} value={Number(x.id)}>
-                {x.nome}
-              </option>
-            ))}
+            
+            {instituicao?.map((instituicao) => 
+                instituicao?.turma?.map((turma) => <option className="bg-[#222533]" key={turma.id} value={Number(turma.id)} >{instituicao.nome} - {turma.nome}</option>)
+            )}
           </select>
           <div className="flex justify-between">
             <button type="submit" className="bg-red-500 px-5 py-2 rounded-2xl">

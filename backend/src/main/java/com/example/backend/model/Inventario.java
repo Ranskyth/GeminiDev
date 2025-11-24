@@ -7,9 +7,14 @@ import lombok.Data;
 @Table(name = "inventario")
 @Data
 public class Inventario {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
+
+    @OneToOne
+    @JoinColumn(name = "aluno_id")
+    private User user;
 
     
 }

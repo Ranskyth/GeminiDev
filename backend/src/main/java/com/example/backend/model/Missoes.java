@@ -1,8 +1,6 @@
 package com.example.backend.model;
 
 import jakarta.persistence.*;
-
-import jakarta.persistence.Id;
 import lombok.Data;
 
 @Entity
@@ -11,15 +9,21 @@ import lombok.Data;
 public class Missoes {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id; 
+    private Integer id;
 
     private String nome;
 
+    @Column(columnDefinition = "TEXT")
     private String descricao;
-    private int moeda_recompensa;
-    private int esmeralda_recompensa;
-    private int ruby_recompensa;
-    private int diamante_recompensa;
-    private int xp_recompensa;
+
+    private Integer moedasRecompensa;
+    private Integer xpRecompensa;
+    private Integer diamantesRecompensa;
+    private Integer rubysRecompensa;
+    private Integer esmeraldasRecompensa;
+
+    @ManyToOne
+    @JoinColumn(name = "turma_id")
+    private Turma turma;
 
 }

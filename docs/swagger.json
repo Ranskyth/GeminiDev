@@ -1,0 +1,1213 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "OpenAPI definition",
+    "version": "v0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3333",
+      "description": "Generated server url"
+    }
+  ],
+  "paths": {
+    "/api/v1/atributo": {
+      "post": {
+        "operationId": "create",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AtributoDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/Atributo"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "atributo-controller"
+        ]
+      }
+    },
+    "/api/v1/atributo/all": {
+      "get": {
+        "operationId": "getAllAtributos",
+        "responses": {
+          "200": {
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Atributo"
+                  }
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "atributo-controller"
+        ]
+      }
+    },
+    "/api/v1/atributo/{id}": {
+      "delete": {
+        "operationId": "deleteAtributos",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "atributo-controller"
+        ]
+      },
+      "get": {
+        "operationId": "getByIdAtributos",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/Atributo"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "atributo-controller"
+        ]
+      },
+      "put": {
+        "operationId": "updateAtributos",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AtributoDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/Atributo"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "atributo-controller"
+        ]
+      }
+    },
+    "/api/v1/auth/login": {
+      "post": {
+        "operationId": "Login",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/Token"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "auth-controller"
+        ]
+      }
+    },
+    "/api/v1/auth/register": {
+      "post": {
+        "operationId": "Register",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "auth-controller"
+        ]
+      }
+    },
+    "/api/v1/auth/reset-password": {
+      "post": {
+        "operationId": "ResetPassword",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "string"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "auth-controller"
+        ]
+      }
+    },
+    "/api/v1/instituicao": {
+      "post": {
+        "operationId": "createInstituicaos",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/InstituicaoDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/Instituicao"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "instituicao-controller"
+        ]
+      }
+    },
+    "/api/v1/instituicao/": {
+      "get": {
+        "operationId": "getAllInstituicaos",
+        "responses": {
+          "200": {
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Instituicao"
+                  }
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "instituicao-controller"
+        ]
+      }
+    },
+    "/api/v1/instituicao/{id}": {
+      "delete": {
+        "operationId": "deleteInstituicaos",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "instituicao-controller"
+        ]
+      },
+      "get": {
+        "operationId": "getByIdInstituicaos",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/Instituicao"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "instituicao-controller"
+        ]
+      },
+      "put": {
+        "operationId": "updateInstituicaos",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/InstituicaoDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/Instituicao"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "instituicao-controller"
+        ]
+      }
+    },
+    "/api/v1/missions": {
+      "get": {
+        "operationId": "findAlMissoes",
+        "responses": {
+          "200": {
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Missoes"
+                  }
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "missoes-controller"
+        ]
+      },
+      "post": {
+        "operationId": "createMissoes",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MissaoDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/Missoes"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "missoes-controller"
+        ]
+      }
+    },
+    "/api/v1/missions/{id}": {
+      "delete": {
+        "operationId": "deleteMissoes",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "missoes-controller"
+        ]
+      }
+    },
+    "/api/v1/nivel-definicao": {
+      "post": {
+        "operationId": "createNivelDefinicao",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NivelDefinicaoDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/NivelDefinicao"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "nivel-definicao-controller"
+        ]
+      }
+    },
+    "/api/v1/nivel-definicao/all": {
+      "get": {
+        "operationId": "getAllNivelDefinicao",
+        "responses": {
+          "200": {
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/NivelDefinicao"
+                  }
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "nivel-definicao-controller"
+        ]
+      }
+    },
+    "/api/v1/nivel-definicao/{id}": {
+      "delete": {
+        "operationId": "deleteNivelDefinicao",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "nivel-definicao-controller"
+        ]
+      },
+      "get": {
+        "operationId": "getByIdNivelDefinicao",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/NivelDefinicao"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "nivel-definicao-controller"
+        ]
+      },
+      "put": {
+        "operationId": "updateNivelDefinicao",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NivelDefinicaoDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/NivelDefinicao"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "nivel-definicao-controller"
+        ]
+      }
+    },
+    "/api/v1/turma": {
+      "post": {
+        "operationId": "createTurma",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TurmaDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/Turma"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "turma-controller"
+        ]
+      }
+    },
+    "/api/v1/turma/all": {
+      "get": {
+        "operationId": "getAllTurma",
+        "responses": {
+          "200": {
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Turma"
+                  }
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "turma-controller"
+        ]
+      }
+    },
+    "/api/v1/turma/qt": {
+      "get": {
+        "operationId": "getTurmas",
+        "responses": {
+          "200": {
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int64"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "turma-controller"
+        ]
+      }
+    },
+    "/api/v1/turma/{id}": {
+      "delete": {
+        "operationId": "deleteTurma",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "turma-controller"
+        ]
+      },
+      "put": {
+        "operationId": "updateTurma",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TurmaDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/Turma"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "turma-controller"
+        ]
+      }
+    },
+    "/api/v1/user": {
+      "get": {
+        "operationId": "getUserById",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "user-controller"
+        ]
+      },
+      "post": {
+        "operationId": "createUser",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "user-controller"
+        ]
+      }
+    },
+    "/api/v1/user/all": {
+      "get": {
+        "operationId": "getUser",
+        "responses": {
+          "200": {
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/User"
+                  }
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "user-controller"
+        ]
+      }
+    },
+    "/api/v1/user/qt": {
+      "get": {
+        "operationId": "getQtUsers",
+        "responses": {
+          "200": {
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int64"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "user-controller"
+        ]
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Atributo": {
+        "type": "object",
+        "properties": {
+          "diamantes": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "esmeraldas": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "moedas": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "rubys": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "xp": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "AtributoDto": {
+        "type": "object",
+        "properties": {
+          "diamantes": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "esmeraldas": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "moedas": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "rubys": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "xp": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "GrantedAuthority": {
+        "type": "object",
+        "properties": {
+          "authority": {
+            "type": "string"
+          }
+        }
+      },
+      "Instituicao": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "nome": {
+            "type": "string"
+          },
+          "turma": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Turma"
+            }
+          }
+        }
+      },
+      "InstituicaoDto": {
+        "type": "object",
+        "properties": {
+          "nome": {
+            "type": "string"
+          }
+        }
+      },
+      "LoginDto": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string"
+          },
+          "senha": {
+            "type": "string"
+          }
+        }
+      },
+      "MissaoDto": {
+        "type": "object",
+        "properties": {
+          "descricao": {
+            "type": "string"
+          },
+          "diamantesRecompensa": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "esmeraldasRecompensa": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "moedasRecompensa": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "nome": {
+            "type": "string"
+          },
+          "rubysRecompensa": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "turmaId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "xpRecompensa": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "Missoes": {
+        "type": "object",
+        "properties": {
+          "descricao": {
+            "type": "string"
+          },
+          "diamantesRecompensa": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "esmeraldasRecompensa": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "moedasRecompensa": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "nome": {
+            "type": "string"
+          },
+          "rubysRecompensa": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "turma": {
+            "$ref": "#/components/schemas/Turma"
+          },
+          "xpRecompensa": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "NivelDefinicao": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "nome": {
+            "type": "string"
+          },
+          "pontosNecessarios": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "NivelDefinicaoDto": {
+        "type": "object",
+        "properties": {
+          "nome": {
+            "type": "string"
+          },
+          "pontosNecessarios": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "Token": {
+        "type": "object",
+        "properties": {
+          "github": {
+            "type": "string"
+          },
+          "nome": {
+            "type": "string"
+          },
+          "token": {
+            "type": "string"
+          }
+        }
+      },
+      "Turma": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "nome": {
+            "type": "string"
+          },
+          "periodo": {
+            "type": "string"
+          },
+          "user": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/User"
+            }
+          }
+        }
+      },
+      "TurmaDto": {
+        "type": "object",
+        "properties": {
+          "instituicao": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "periodo": {
+            "type": "string"
+          },
+          "turma": {
+            "type": "string"
+          }
+        }
+      },
+      "User": {
+        "type": "object",
+        "properties": {
+          "accountNonExpired": {
+            "type": "boolean"
+          },
+          "accountNonLocked": {
+            "type": "boolean"
+          },
+          "atributo": {
+            "$ref": "#/components/schemas/Atributo"
+          },
+          "authorities": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/GrantedAuthority"
+            }
+          },
+          "credentialsNonExpired": {
+            "type": "boolean"
+          },
+          "email": {
+            "type": "string"
+          },
+          "enabled": {
+            "type": "boolean"
+          },
+          "github": {
+            "type": "string"
+          },
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "nome": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          },
+          "role": {
+            "type": "string",
+            "enum": [
+              "ADMIN",
+              "USER"
+            ]
+          },
+          "senha": {
+            "type": "string"
+          },
+          "username": {
+            "type": "string"
+          }
+        }
+      },
+      "UserDto": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string"
+          },
+          "github": {
+            "type": "string"
+          },
+          "nome": {
+            "type": "string"
+          },
+          "senha": {
+            "type": "string"
+          },
+          "turma": {
+            "type": "integer",
+            "format": "int64"
+          }
+        }
+      }
+    }
+  }
+}
