@@ -42,7 +42,7 @@ public class MissoesController {
     }
 
     @GetMapping
-    public List<Missoes> findAlMissoes() {
+    public List<Missoes> getAllMissoes() {
         return missoesRepository.findAll();
     }
 

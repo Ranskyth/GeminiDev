@@ -10,7 +10,7 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.example.backend.model.Token;
 import com.example.backend.model.User;
-import com.example.backend.model.UserRole;
+import com.example.backend.enums.UserRole;
 
 @Service
 public class TokenServices {

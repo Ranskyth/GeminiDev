@@ -2,8 +2,8 @@
 "use client";
 
 import { BACKEND } from "@/config/config";
-import { getAllInstituicaos, getAllTurma } from "@/lib/api/generated";
-import { Instituicao, Turma } from "@/lib/api/model";
+import { getAllInstituicaos } from "@/lib/api/generated";
+import { Instituicao } from "@/lib/api/model/instituicao";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
@@ -12,7 +12,6 @@ import { toast, ToastContainer } from "react-toastify";
 
 export default function Login() {
   const { register, handleSubmit } = useForm();
-  const [turma, setTurma] = useState<Turma[]>([{} as Turma]);
   const [instituicao, setInstituicao] = useState<Instituicao[]>()
   const router = useRouter();
 
@@ -21,6 +20,7 @@ export default function Login() {
 
       const {data: instituicao} = await getAllInstituicaos()
       setInstituicao(instituicao)
+
     })();
   }, []);
 

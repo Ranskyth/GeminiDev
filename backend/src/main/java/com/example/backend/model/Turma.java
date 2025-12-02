@@ -21,6 +21,7 @@ public class Turma {
 
     private String periodo;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "turma", cascade = CascadeType.ALL)
     private List<User> user;
 

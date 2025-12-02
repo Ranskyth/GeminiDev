@@ -1,5 +1,6 @@
 "use client";
 
+import { InputCriar, ModalCriar, SelectCriar } from "@/components/modal-criar";
 import {
   getAllTurma,
   createTurma,
@@ -8,14 +9,6 @@ import {
 } from "@/lib/api/generated";
 
 import { Instituicao, Turma } from "@/lib/api/model";
-import {
-  Modal,
-  ModalBody,
-  ModalContent,
-  ModalFooter,
-  ModalHeader,
-  useDisclosure,
-} from "@heroui/modal";
 
 import { useEffect, useState } from "react";
 
@@ -25,7 +18,7 @@ export default function Turmas() {
   const [instituicao, setInstituicao] = useState<number>(0)
   const [listTurmas, setListTurmas] = useState<Turma[]>([]);
   const [listInstituicao, setListInstituicao] = useState<Instituicao[]>([])
-  const { isOpen, onOpen, onOpenChange } = useDisclosure();
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const loadTurmas = async () => {
     const { data } = await getAllTurma();
@@ -48,8 +41,8 @@ export default function Turmas() {
 
     setNome("");
     setPeriodo("");
+    setInstituicao(0);
     await loadTurmas();
-    onOpenChange();
   };
 
   const handleDeleteTurma = async (id: number) => {
@@ -68,14 +61,14 @@ export default function Turmas() {
         <div className="flex gap-5">
           <input className="border-2 p-2 rounded-2xl w-[80%] h-10" type="text" />
           <button
-            onClick={onOpen}
+            onClick={() => setIsModalOpen(true)}
             className="h-10 rounded-[10px] px-5 font-bold bg-[#9B32EF] hover:bg-[#9B32EF]/80"
           >
             Adicionar Turma
           </button>
         </div>
 
-        <ul className="mt-5 flex gap-5 flex-col h-[70vh] overflow-x-hidden">
+        <ul className="mt-5 flex gap-5 flex-col h-[80vh] overflow-x-hidden">
           {listTurmas.map((turma) => (
             <li
               className="bg-[#313640] flex rounded-2xl p-5 uppercase justify-between"
@@ -93,40 +86,31 @@ export default function Turmas() {
         </ul>
       </div>
 
-      <Modal className="top-50 p-5 bg-[#000000] h-fit w-[75%]" isOpen={isOpen} onOpenChange={onOpenChange}>
-        <ModalContent>
-          <>
-            <ModalHeader className="mt-10">Adicionar Turma</ModalHeader>
-            <ModalBody className="flex flex-col gap-4">
-              <input
-                value={nome}
-                onChange={(e) => setNome(e.target.value)}
-                className="h-10 pl-4 rounded-2xl border-1"
-                placeholder="Nome da Turma"
-              />
-              <input
-                value={periodo}
-                onChange={(e) => setPeriodo(e.target.value)}
-                className="h-10 pl-4 rounded-2xl border-1"
-                placeholder="Período"
-              />
-              <select className="mb-5 p-4 border-2 rounded-2xl" onChange={(e) => setInstituicao(Number(e.target.value))} name="" id="">
-                <option className="bg-[#141414]" value="">Nenhuma</option>
-                {listInstituicao.map((instituicao) => <option key={instituicao.id} value={instituicao.id} className="bg-[#141414]">{instituicao.nome}</option>)}
-              </select>
-            </ModalBody>
-
-            <ModalFooter className="gap-4 mb-5">
-              <button className="h-10 px-5 bg-[#ef3232] rounded-[10px]" onClick={onOpenChange}>
-                Cancelar
-              </button>
-              <button className="h-10 px-5 bg-[#32c3ef] rounded-[10px]" onClick={handleCreateTurma}>
-                Criar
-              </button>
-            </ModalFooter>
-          </>
-        </ModalContent>
-      </Modal>
+      <ModalCriar
+        isOpen={isModalOpen}
+        onOpenChange={setIsModalOpen}
+        titulo="Adicionar Turma"
+        onCriar={handleCreateTurma}
+      >
+        <InputCriar
+          label="Nome da Turma"
+          value={nome}
+          onChange={(e) => setNome(e.target.value)}
+          placeholder="Ex: 1º Ano A"
+        />
+        <InputCriar
+          label="Período"
+          value={periodo}
+          onChange={(e) => setPeriodo(e.target.value)}
+          placeholder="Ex: 2024/1"
+        />
+        <SelectCriar
+          label="Instituição"
+          options={listInstituicao.filter(i => i.nome).map(inst => ({ value: inst.id!, label: inst.nome! }))}
+          value={instituicao}
+          onChange={(e) => setInstituicao(Number(e.target.value))}
+        />
+      </ModalCriar>
     </>
   );
 }

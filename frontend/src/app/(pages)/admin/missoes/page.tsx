@@ -1,20 +1,14 @@
 "use client";
 
+import { InputCriar, ModalCriar, SelectCriar } from "@/components/modal-criar";
 import {
   createMissoes,
   deleteMissoes,
-  findAlMissoes,
+  getAllMissoes,
+  getAllTurma,
 } from "@/lib/api/generated";
-
-import { Missoes } from "@/lib/api/model";
-import {
-  Modal,
-  ModalBody,
-  ModalContent,
-  ModalFooter,
-  ModalHeader,
-  useDisclosure,
-} from "@heroui/modal";
+import { Missoes } from "@/lib/api/model/missoes";
+import { Turma } from "@/lib/api/model/turma";
 
 import { useEffect, useState } from "react";
 
@@ -28,11 +22,17 @@ export default function MissoesPage() {
   const [turmaId, setTurmaId] = useState(0);
   const [xp, setXp] = useState(0);
   const [listMissoes, setListMissoes] = useState<Missoes[]>([]);
-  const { isOpen, onOpen, onOpenChange } = useDisclosure();
+  const [listTurmas, setListTurmas] = useState<Turma[]>([]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const loadMissoes = async () => {
-    const { data } = await findAlMissoes();
+    const { data } = await getAllMissoes();
     setListMissoes(data);
+  };
+
+  const loadTurmas = async () => {
+    const { data } = await getAllTurma();
+    setListTurmas(data);
   };
 
   const handleCreateMissao = async () => {
@@ -49,10 +49,14 @@ export default function MissoesPage() {
 
     setNome("");
     setDescricao("");
+    setMoedasRecompensa(0);
+    setDiamantesRecompensa(0);
+    setEsmeraldasRecompensa(0);
+    setRubysRecompensa(0);
     setXp(0);
+    setTurmaId(0);
 
     await loadMissoes();
-    onOpenChange();
   };
 
   const handleDeleteMissao = async (id: number) => {
@@ -62,6 +66,7 @@ export default function MissoesPage() {
 
   useEffect(() => {
     loadMissoes();
+    loadTurmas();
   }, []);
 
   return (
@@ -73,14 +78,14 @@ export default function MissoesPage() {
             type="text"
           />
           <button
-            onClick={onOpen}
+            onClick={() => setIsModalOpen(true)}
             className="h-10 px-5 bg-[#9B32EF] rounded-[10px]"
           >
             Criar Missão
           </button>
         </div>
 
-        <ul className="mt-5 flex gap-5 flex-col">
+        <ul className="mt-5 flex gap-5 h-[80vh] overflow-auto flex-col">
           {listMissoes.map((m) => (
             <li
               className="bg-[#313640] p-5 rounded-2xl flex justify-between"
@@ -100,100 +105,68 @@ export default function MissoesPage() {
         </ul>
       </div>
 
-      <Modal
-        className="top-40 p-5 bg-[#000000] h-fit w-[75%]"
-        isOpen={isOpen}
-        onOpenChange={onOpenChange}
+      <ModalCriar
+        isOpen={isModalOpen}
+        onOpenChange={setIsModalOpen}
+        titulo="Criar Missão"
+        onCriar={handleCreateMissao}
       >
-        <ModalContent>
-          <>
-            <ModalHeader className="mt-10">Criar Missão</ModalHeader>
-            <ModalBody className="flex flex-col gap-4">
-              <input
-                value={nome}
-                onChange={(e) => setNome(e.target.value)}
-                className="h-10 pl-4 rounded-2xl border-1"
-                placeholder="Nome"
-              />
-              <input
-                value={descricao}
-                onChange={(e) => setDescricao(e.target.value)}
-                className="h-10 pl-4 rounded-2xl border-1"
-                placeholder="Descrição"
-              />
-              <div className="flex gap-5">
-                <div className="flex-1">
-                  <label className="block" htmlFor="">
-                    Moedas 
-                  </label>
-                  <input
-                    value={xp}
-                    type="number"
-                    onChange={(e) => setXp(Number(e.target.value))}
-                    className="h-10 w-full pl-4 rounded-[10px] border-1"
-                    placeholder="XP"
-                  />
-                </div>
-
-                <div className="flex-1">
-                  <label className="block" htmlFor="">
-                    Diamantes
-                  </label>
-                  <input
-                    value={xp}
-                    type="number"
-                    onChange={(e) => setXp(Number(e.target.value))}
-                    className="h-10 w-full pl-4 rounded-[10px] border-1"
-                    placeholder="XP"
-                  />
-                </div>
-                <div className="flex-1">
-                  <label className="block" htmlFor="">
-                    Rubys
-                  </label>
-                  <input
-                    value={xp}
-                    type="number"
-                    onChange={(e) => setXp(Number(e.target.value))}
-                    className="h-10 w-full pl-4 rounded-[10px] border-1"
-                    placeholder="XP"
-                  />
-                </div>
-                <div className="flex-1">
-                  <label className="block" htmlFor="">
-                    Esmeraldas
-                  </label>
-                  <input
-                    value={xp}
-                    type="number"
-                    onChange={(e) => setXp(Number(e.target.value))}
-                    className="h-10 w-full pl-4 rounded-[10px] border-1"
-                    placeholder="XP"
-                  />
-                </div>
-              </div>
-              <select className="mb-5 border-2 rounded-2xl p-5" name="" id="">
-                <option value="">Nenhum</option>
-              </select>
-            </ModalBody>
-
-            <ModalFooter className="gap-4 mb-5">
-              <button
-                className="h-10 px-5 bg-[#ef3232] rounded-[10px]"
-                onClick={onOpenChange}
-              >
-                Cancelar
-              </button>
-              <button
-                className="h-10 px-5 bg-[#32c3ef] rounded-[10px]"
-                onClick={handleCreateMissao}
-              >
-                Criar
-              </button>
-            </ModalFooter>
-          </>
-        </ModalContent>
-      </Modal>
+        <InputCriar
+          label="Nome"
+          value={nome}
+          onChange={(e) => setNome(e.target.value)}
+          placeholder="Nome da Missão"
+        />
+        <InputCriar
+          label="Descrição"
+          value={descricao}
+          onChange={(e) => setDescricao(e.target.value)}
+          placeholder="Descrição da Missão"
+        />
+        <div className="flex gap-5">
+          <InputCriar
+            label="XP"
+            type="number"
+            value={xp}
+            onChange={(e) => setXp(Number(e.target.value))}
+            placeholder="0"
+          />
+          <InputCriar
+            label="Moedas"
+            type="number"
+            value={moedasRecompensa}
+            onChange={(e) => setMoedasRecompensa(Number(e.target.value))}
+            placeholder="0"
+          />
+          <InputCriar
+            label="Diamantes"
+            type="number"
+            value={diamantesRecompensa}
+            onChange={(e) => setDiamantesRecompensa(Number(e.target.value))}
+            placeholder="0"
+          />
+          <InputCriar
+            label="Rubys"
+            type="number"
+            value={rubysRecompensa}
+            onChange={(e) => setRubysRecompensa(Number(e.target.value))}
+            placeholder="0"
+          />
+          <InputCriar
+            label="Esmeraldas"
+            type="number"
+            value={esmeraldasRecompensa}
+            onChange={(e) => setEsmeraldasRecompensa(Number(e.target.value))}
+            placeholder="0"
+          />
+        </div>
+        <SelectCriar
+          label="Turma (opcional)"
+          options={listTurmas.filter(t => t.nome).map(turma => ({ value: turma.id!, label: turma.nome! }))}
+          value={turmaId}
+          onChange={(e) => setTurmaId(Number(e.target.value))}
+        />
+      </ModalCriar>
     </>
   );
 }

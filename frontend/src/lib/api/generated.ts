@@ -7,14 +7,21 @@
 import type {
   Atributo,
   AtributoDto,
+  GetAllQuestionarios200,
   GetUserByIdParams,
   Instituicao,
   InstituicaoDto,
+  InventarioItem,
+  Item,
+  ItemDto,
   LoginDto,
+  LojaItem,
   MissaoDto,
   Missoes,
+  MissoesSubmissoes,
   NivelDefinicao,
   NivelDefinicaoDto,
+  Questionario,
   Token,
   Turma,
   TurmaDto,
@@ -538,29 +545,69 @@ export const updateInstituicaos = async (id: number,
 
 
 
-export type findAlMissoesResponse200 = {
-  data: Missoes[]
+export type createInventarioItemResponse200 = {
+  data: InventarioItem
   status: 200
 }
     
-export type findAlMissoesResponseSuccess = (findAlMissoesResponse200) & {
+export type createInventarioItemResponseSuccess = (createInventarioItemResponse200) & {
   headers: Headers;
 };
 ;
 
-export type findAlMissoesResponse = (findAlMissoesResponseSuccess)
+export type createInventarioItemResponse = (createInventarioItemResponseSuccess)
 
-export const getFindAlMissoesUrl = () => {
+export const getCreateInventarioItemUrl = () => {
 
 
   
 
-  return `http://localhost:3333/api/v1/missions`
+  return `http://localhost:3333/api/v1/inventario-item`
 }
 
-export const findAlMissoes = async ( options?: RequestInit): Promise<findAlMissoesResponse> => {
+export const createInventarioItem = async (inventarioItem: InventarioItem, options?: RequestInit): Promise<createInventarioItemResponse> => {
   
-  const res = await fetch(getFindAlMissoesUrl(),
+  const res = await fetch(getCreateInventarioItemUrl(),
+  {      
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(
+      inventarioItem,)
+  }
+)
+
+  const body = [204, 205, 304].includes(res.status) ? null : await res.text();
+  
+  const data: createInventarioItemResponse['data'] = body ? JSON.parse(body) : {}
+  return { data, status: res.status, headers: res.headers } as createInventarioItemResponse
+}
+
+
+
+export type getAllInventarioItemsResponse200 = {
+  data: InventarioItem[]
+  status: 200
+}
+    
+export type getAllInventarioItemsResponseSuccess = (getAllInventarioItemsResponse200) & {
+  headers: Headers;
+};
+;
+
+export type getAllInventarioItemsResponse = (getAllInventarioItemsResponseSuccess)
+
+export const getGetAllInventarioItemsUrl = () => {
+
+
+  
+
+  return `http://localhost:3333/api/v1/inventario-item/all`
+}
+
+export const getAllInventarioItems = async ( options?: RequestInit): Promise<getAllInventarioItemsResponse> => {
+  
+  const res = await fetch(getGetAllInventarioItemsUrl(),
   {      
     ...options,
     method: 'GET'
@@ -571,8 +618,601 @@ export const findAlMissoes = async ( options?: RequestInit): Promise<findAlMisso
 
   const body = [204, 205, 304].includes(res.status) ? null : await res.text();
   
-  const data: findAlMissoesResponse['data'] = body ? JSON.parse(body) : {}
-  return { data, status: res.status, headers: res.headers } as findAlMissoesResponse
+  const data: getAllInventarioItemsResponse['data'] = body ? JSON.parse(body) : {}
+  return { data, status: res.status, headers: res.headers } as getAllInventarioItemsResponse
+}
+
+
+
+export type getInventarioItemsByUserResponse200 = {
+  data: InventarioItem[]
+  status: 200
+}
+    
+export type getInventarioItemsByUserResponseSuccess = (getInventarioItemsByUserResponse200) & {
+  headers: Headers;
+};
+;
+
+export type getInventarioItemsByUserResponse = (getInventarioItemsByUserResponseSuccess)
+
+export const getGetInventarioItemsByUserUrl = (userId: number,) => {
+
+
+  
+
+  return `http://localhost:3333/api/v1/inventario-item/user/${userId}`
+}
+
+export const getInventarioItemsByUser = async (userId: number, options?: RequestInit): Promise<getInventarioItemsByUserResponse> => {
+  
+  const res = await fetch(getGetInventarioItemsByUserUrl(userId),
+  {      
+    ...options,
+    method: 'GET'
+    
+    
+  }
+)
+
+  const body = [204, 205, 304].includes(res.status) ? null : await res.text();
+  
+  const data: getInventarioItemsByUserResponse['data'] = body ? JSON.parse(body) : {}
+  return { data, status: res.status, headers: res.headers } as getInventarioItemsByUserResponse
+}
+
+
+
+export type deleteInventarioItemResponse200 = {
+  data: string
+  status: 200
+}
+    
+export type deleteInventarioItemResponseSuccess = (deleteInventarioItemResponse200) & {
+  headers: Headers;
+};
+;
+
+export type deleteInventarioItemResponse = (deleteInventarioItemResponseSuccess)
+
+export const getDeleteInventarioItemUrl = (id: number,) => {
+
+
+  
+
+  return `http://localhost:3333/api/v1/inventario-item/${id}`
+}
+
+export const deleteInventarioItem = async (id: number, options?: RequestInit): Promise<deleteInventarioItemResponse> => {
+  
+  const res = await fetch(getDeleteInventarioItemUrl(id),
+  {      
+    ...options,
+    method: 'DELETE'
+    
+    
+  }
+)
+
+  const body = [204, 205, 304].includes(res.status) ? null : await res.text();
+  
+  const data: deleteInventarioItemResponse['data'] = body ? JSON.parse(body) : {}
+  return { data, status: res.status, headers: res.headers } as deleteInventarioItemResponse
+}
+
+
+
+export type getByIdInventarioItemResponse200 = {
+  data: InventarioItem
+  status: 200
+}
+    
+export type getByIdInventarioItemResponseSuccess = (getByIdInventarioItemResponse200) & {
+  headers: Headers;
+};
+;
+
+export type getByIdInventarioItemResponse = (getByIdInventarioItemResponseSuccess)
+
+export const getGetByIdInventarioItemUrl = (id: number,) => {
+
+
+  
+
+  return `http://localhost:3333/api/v1/inventario-item/${id}`
+}
+
+export const getByIdInventarioItem = async (id: number, options?: RequestInit): Promise<getByIdInventarioItemResponse> => {
+  
+  const res = await fetch(getGetByIdInventarioItemUrl(id),
+  {      
+    ...options,
+    method: 'GET'
+    
+    
+  }
+)
+
+  const body = [204, 205, 304].includes(res.status) ? null : await res.text();
+  
+  const data: getByIdInventarioItemResponse['data'] = body ? JSON.parse(body) : {}
+  return { data, status: res.status, headers: res.headers } as getByIdInventarioItemResponse
+}
+
+
+
+export type updateInventarioItemResponse200 = {
+  data: InventarioItem
+  status: 200
+}
+    
+export type updateInventarioItemResponseSuccess = (updateInventarioItemResponse200) & {
+  headers: Headers;
+};
+;
+
+export type updateInventarioItemResponse = (updateInventarioItemResponseSuccess)
+
+export const getUpdateInventarioItemUrl = (id: number,) => {
+
+
+  
+
+  return `http://localhost:3333/api/v1/inventario-item/${id}`
+}
+
+export const updateInventarioItem = async (id: number,
+    inventarioItem: InventarioItem, options?: RequestInit): Promise<updateInventarioItemResponse> => {
+  
+  const res = await fetch(getUpdateInventarioItemUrl(id),
+  {      
+    ...options,
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(
+      inventarioItem,)
+  }
+)
+
+  const body = [204, 205, 304].includes(res.status) ? null : await res.text();
+  
+  const data: updateInventarioItemResponse['data'] = body ? JSON.parse(body) : {}
+  return { data, status: res.status, headers: res.headers } as updateInventarioItemResponse
+}
+
+
+
+export type createItemResponse200 = {
+  data: Item
+  status: 200
+}
+    
+export type createItemResponseSuccess = (createItemResponse200) & {
+  headers: Headers;
+};
+;
+
+export type createItemResponse = (createItemResponseSuccess)
+
+export const getCreateItemUrl = () => {
+
+
+  
+
+  return `http://localhost:3333/api/v1/item`
+}
+
+export const createItem = async (itemDto: ItemDto, options?: RequestInit): Promise<createItemResponse> => {
+  
+  const res = await fetch(getCreateItemUrl(),
+  {      
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(
+      itemDto,)
+  }
+)
+
+  const body = [204, 205, 304].includes(res.status) ? null : await res.text();
+  
+  const data: createItemResponse['data'] = body ? JSON.parse(body) : {}
+  return { data, status: res.status, headers: res.headers } as createItemResponse
+}
+
+
+
+export type getAllItemsResponse200 = {
+  data: Item[]
+  status: 200
+}
+    
+export type getAllItemsResponseSuccess = (getAllItemsResponse200) & {
+  headers: Headers;
+};
+;
+
+export type getAllItemsResponse = (getAllItemsResponseSuccess)
+
+export const getGetAllItemsUrl = () => {
+
+
+  
+
+  return `http://localhost:3333/api/v1/item/all`
+}
+
+export const getAllItems = async ( options?: RequestInit): Promise<getAllItemsResponse> => {
+  
+  const res = await fetch(getGetAllItemsUrl(),
+  {      
+    ...options,
+    method: 'GET'
+    
+    
+  }
+)
+
+  const body = [204, 205, 304].includes(res.status) ? null : await res.text();
+  
+  const data: getAllItemsResponse['data'] = body ? JSON.parse(body) : {}
+  return { data, status: res.status, headers: res.headers } as getAllItemsResponse
+}
+
+
+
+export type deleteItemResponse200 = {
+  data: string
+  status: 200
+}
+    
+export type deleteItemResponseSuccess = (deleteItemResponse200) & {
+  headers: Headers;
+};
+;
+
+export type deleteItemResponse = (deleteItemResponseSuccess)
+
+export const getDeleteItemUrl = (id: number,) => {
+
+
+  
+
+  return `http://localhost:3333/api/v1/item/${id}`
+}
+
+export const deleteItem = async (id: number, options?: RequestInit): Promise<deleteItemResponse> => {
+  
+  const res = await fetch(getDeleteItemUrl(id),
+  {      
+    ...options,
+    method: 'DELETE'
+    
+    
+  }
+)
+
+  const body = [204, 205, 304].includes(res.status) ? null : await res.text();
+  
+  const data: deleteItemResponse['data'] = body ? JSON.parse(body) : {}
+  return { data, status: res.status, headers: res.headers } as deleteItemResponse
+}
+
+
+
+export type getByIdItemResponse200 = {
+  data: Item
+  status: 200
+}
+    
+export type getByIdItemResponseSuccess = (getByIdItemResponse200) & {
+  headers: Headers;
+};
+;
+
+export type getByIdItemResponse = (getByIdItemResponseSuccess)
+
+export const getGetByIdItemUrl = (id: number,) => {
+
+
+  
+
+  return `http://localhost:3333/api/v1/item/${id}`
+}
+
+export const getByIdItem = async (id: number, options?: RequestInit): Promise<getByIdItemResponse> => {
+  
+  const res = await fetch(getGetByIdItemUrl(id),
+  {      
+    ...options,
+    method: 'GET'
+    
+    
+  }
+)
+
+  const body = [204, 205, 304].includes(res.status) ? null : await res.text();
+  
+  const data: getByIdItemResponse['data'] = body ? JSON.parse(body) : {}
+  return { data, status: res.status, headers: res.headers } as getByIdItemResponse
+}
+
+
+
+export type updateItemResponse200 = {
+  data: Item
+  status: 200
+}
+    
+export type updateItemResponseSuccess = (updateItemResponse200) & {
+  headers: Headers;
+};
+;
+
+export type updateItemResponse = (updateItemResponseSuccess)
+
+export const getUpdateItemUrl = (id: number,) => {
+
+
+  
+
+  return `http://localhost:3333/api/v1/item/${id}`
+}
+
+export const updateItem = async (id: number,
+    itemDto: ItemDto, options?: RequestInit): Promise<updateItemResponse> => {
+  
+  const res = await fetch(getUpdateItemUrl(id),
+  {      
+    ...options,
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(
+      itemDto,)
+  }
+)
+
+  const body = [204, 205, 304].includes(res.status) ? null : await res.text();
+  
+  const data: updateItemResponse['data'] = body ? JSON.parse(body) : {}
+  return { data, status: res.status, headers: res.headers } as updateItemResponse
+}
+
+
+
+export type createLojaItemResponse200 = {
+  data: LojaItem
+  status: 200
+}
+    
+export type createLojaItemResponseSuccess = (createLojaItemResponse200) & {
+  headers: Headers;
+};
+;
+
+export type createLojaItemResponse = (createLojaItemResponseSuccess)
+
+export const getCreateLojaItemUrl = () => {
+
+
+  
+
+  return `http://localhost:3333/api/v1/loja-item`
+}
+
+export const createLojaItem = async (lojaItem: LojaItem, options?: RequestInit): Promise<createLojaItemResponse> => {
+  
+  const res = await fetch(getCreateLojaItemUrl(),
+  {      
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(
+      lojaItem,)
+  }
+)
+
+  const body = [204, 205, 304].includes(res.status) ? null : await res.text();
+  
+  const data: createLojaItemResponse['data'] = body ? JSON.parse(body) : {}
+  return { data, status: res.status, headers: res.headers } as createLojaItemResponse
+}
+
+
+
+export type getAllLojaItemsResponse200 = {
+  data: LojaItem[]
+  status: 200
+}
+    
+export type getAllLojaItemsResponseSuccess = (getAllLojaItemsResponse200) & {
+  headers: Headers;
+};
+;
+
+export type getAllLojaItemsResponse = (getAllLojaItemsResponseSuccess)
+
+export const getGetAllLojaItemsUrl = () => {
+
+
+  
+
+  return `http://localhost:3333/api/v1/loja-item/all`
+}
+
+export const getAllLojaItems = async ( options?: RequestInit): Promise<getAllLojaItemsResponse> => {
+  
+  const res = await fetch(getGetAllLojaItemsUrl(),
+  {      
+    ...options,
+    method: 'GET'
+    
+    
+  }
+)
+
+  const body = [204, 205, 304].includes(res.status) ? null : await res.text();
+  
+  const data: getAllLojaItemsResponse['data'] = body ? JSON.parse(body) : {}
+  return { data, status: res.status, headers: res.headers } as getAllLojaItemsResponse
+}
+
+
+
+export type deleteLojaItemResponse200 = {
+  data: string
+  status: 200
+}
+    
+export type deleteLojaItemResponseSuccess = (deleteLojaItemResponse200) & {
+  headers: Headers;
+};
+;
+
+export type deleteLojaItemResponse = (deleteLojaItemResponseSuccess)
+
+export const getDeleteLojaItemUrl = (id: number,) => {
+
+
+  
+
+  return `http://localhost:3333/api/v1/loja-item/${id}`
+}
+
+export const deleteLojaItem = async (id: number, options?: RequestInit): Promise<deleteLojaItemResponse> => {
+  
+  const res = await fetch(getDeleteLojaItemUrl(id),
+  {      
+    ...options,
+    method: 'DELETE'
+    
+    
+  }
+)
+
+  const body = [204, 205, 304].includes(res.status) ? null : await res.text();
+  
+  const data: deleteLojaItemResponse['data'] = body ? JSON.parse(body) : {}
+  return { data, status: res.status, headers: res.headers } as deleteLojaItemResponse
+}
+
+
+
+export type getByIdLojaItemResponse200 = {
+  data: LojaItem
+  status: 200
+}
+    
+export type getByIdLojaItemResponseSuccess = (getByIdLojaItemResponse200) & {
+  headers: Headers;
+};
+;
+
+export type getByIdLojaItemResponse = (getByIdLojaItemResponseSuccess)
+
+export const getGetByIdLojaItemUrl = (id: number,) => {
+
+
+  
+
+  return `http://localhost:3333/api/v1/loja-item/${id}`
+}
+
+export const getByIdLojaItem = async (id: number, options?: RequestInit): Promise<getByIdLojaItemResponse> => {
+  
+  const res = await fetch(getGetByIdLojaItemUrl(id),
+  {      
+    ...options,
+    method: 'GET'
+    
+    
+  }
+)
+
+  const body = [204, 205, 304].includes(res.status) ? null : await res.text();
+  
+  const data: getByIdLojaItemResponse['data'] = body ? JSON.parse(body) : {}
+  return { data, status: res.status, headers: res.headers } as getByIdLojaItemResponse
+}
+
+
+
+export type updateLojaItemResponse200 = {
+  data: LojaItem
+  status: 200
+}
+    
+export type updateLojaItemResponseSuccess = (updateLojaItemResponse200) & {
+  headers: Headers;
+};
+;
+
+export type updateLojaItemResponse = (updateLojaItemResponseSuccess)
+
+export const getUpdateLojaItemUrl = (id: number,) => {
+
+
+  
+
+  return `http://localhost:3333/api/v1/loja-item/${id}`
+}
+
+export const updateLojaItem = async (id: number,
+    lojaItem: LojaItem, options?: RequestInit): Promise<updateLojaItemResponse> => {
+  
+  const res = await fetch(getUpdateLojaItemUrl(id),
+  {      
+    ...options,
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(
+      lojaItem,)
+  }
+)
+
+  const body = [204, 205, 304].includes(res.status) ? null : await res.text();
+  
+  const data: updateLojaItemResponse['data'] = body ? JSON.parse(body) : {}
+  return { data, status: res.status, headers: res.headers } as updateLojaItemResponse
+}
+
+
+
+export type getAllMissoesResponse200 = {
+  data: Missoes[]
+  status: 200
+}
+    
+export type getAllMissoesResponseSuccess = (getAllMissoesResponse200) & {
+  headers: Headers;
+};
+;
+
+export type getAllMissoesResponse = (getAllMissoesResponseSuccess)
+
+export const getGetAllMissoesUrl = () => {
+
+
+  
+
+  return `http://localhost:3333/api/v1/missions`
+}
+
+export const getAllMissoes = async ( options?: RequestInit): Promise<getAllMissoesResponse> => {
+  
+  const res = await fetch(getGetAllMissoesUrl(),
+  {      
+    ...options,
+    method: 'GET'
+    
+    
+  }
+)
+
+  const body = [204, 205, 304].includes(res.status) ? null : await res.text();
+  
+  const data: getAllMissoesResponse['data'] = body ? JSON.parse(body) : {}
+  return { data, status: res.status, headers: res.headers } as getAllMissoesResponse
 }
 
 
@@ -652,6 +1292,204 @@ export const deleteMissoes = async (id: number, options?: RequestInit): Promise<
   
   const data: deleteMissoesResponse['data'] = body ? JSON.parse(body) : {}
   return { data, status: res.status, headers: res.headers } as deleteMissoesResponse
+}
+
+
+
+export type createSubmissaoResponse200 = {
+  data: MissoesSubmissoes
+  status: 200
+}
+    
+export type createSubmissaoResponseSuccess = (createSubmissaoResponse200) & {
+  headers: Headers;
+};
+;
+
+export type createSubmissaoResponse = (createSubmissaoResponseSuccess)
+
+export const getCreateSubmissaoUrl = () => {
+
+
+  
+
+  return `http://localhost:3333/api/v1/missoes-submissoes`
+}
+
+export const createSubmissao = async (missoesSubmissoes: MissoesSubmissoes, options?: RequestInit): Promise<createSubmissaoResponse> => {
+  
+  const res = await fetch(getCreateSubmissaoUrl(),
+  {      
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(
+      missoesSubmissoes,)
+  }
+)
+
+  const body = [204, 205, 304].includes(res.status) ? null : await res.text();
+  
+  const data: createSubmissaoResponse['data'] = body ? JSON.parse(body) : {}
+  return { data, status: res.status, headers: res.headers } as createSubmissaoResponse
+}
+
+
+
+export type getAllSubmissoesResponse200 = {
+  data: MissoesSubmissoes[]
+  status: 200
+}
+    
+export type getAllSubmissoesResponseSuccess = (getAllSubmissoesResponse200) & {
+  headers: Headers;
+};
+;
+
+export type getAllSubmissoesResponse = (getAllSubmissoesResponseSuccess)
+
+export const getGetAllSubmissoesUrl = () => {
+
+
+  
+
+  return `http://localhost:3333/api/v1/missoes-submissoes/all`
+}
+
+export const getAllSubmissoes = async ( options?: RequestInit): Promise<getAllSubmissoesResponse> => {
+  
+  const res = await fetch(getGetAllSubmissoesUrl(),
+  {      
+    ...options,
+    method: 'GET'
+    
+    
+  }
+)
+
+  const body = [204, 205, 304].includes(res.status) ? null : await res.text();
+  
+  const data: getAllSubmissoesResponse['data'] = body ? JSON.parse(body) : {}
+  return { data, status: res.status, headers: res.headers } as getAllSubmissoesResponse
+}
+
+
+
+export type getSubmissoesByUserResponse200 = {
+  data: MissoesSubmissoes[]
+  status: 200
+}
+    
+export type getSubmissoesByUserResponseSuccess = (getSubmissoesByUserResponse200) & {
+  headers: Headers;
+};
+;
+
+export type getSubmissoesByUserResponse = (getSubmissoesByUserResponseSuccess)
+
+export const getGetSubmissoesByUserUrl = (userId: number,) => {
+
+
+  
+
+  return `http://localhost:3333/api/v1/missoes-submissoes/user/${userId}`
+}
+
+export const getSubmissoesByUser = async (userId: number, options?: RequestInit): Promise<getSubmissoesByUserResponse> => {
+  
+  const res = await fetch(getGetSubmissoesByUserUrl(userId),
+  {      
+    ...options,
+    method: 'GET'
+    
+    
+  }
+)
+
+  const body = [204, 205, 304].includes(res.status) ? null : await res.text();
+  
+  const data: getSubmissoesByUserResponse['data'] = body ? JSON.parse(body) : {}
+  return { data, status: res.status, headers: res.headers } as getSubmissoesByUserResponse
+}
+
+
+
+export type deleteSubmissaoResponse200 = {
+  data: string
+  status: 200
+}
+    
+export type deleteSubmissaoResponseSuccess = (deleteSubmissaoResponse200) & {
+  headers: Headers;
+};
+;
+
+export type deleteSubmissaoResponse = (deleteSubmissaoResponseSuccess)
+
+export const getDeleteSubmissaoUrl = (id: number,) => {
+
+
+  
+
+  return `http://localhost:3333/api/v1/missoes-submissoes/${id}`
+}
+
+export const deleteSubmissao = async (id: number, options?: RequestInit): Promise<deleteSubmissaoResponse> => {
+  
+  const res = await fetch(getDeleteSubmissaoUrl(id),
+  {      
+    ...options,
+    method: 'DELETE'
+    
+    
+  }
+)
+
+  const body = [204, 205, 304].includes(res.status) ? null : await res.text();
+  
+  const data: deleteSubmissaoResponse['data'] = body ? JSON.parse(body) : {}
+  return { data, status: res.status, headers: res.headers } as deleteSubmissaoResponse
+}
+
+
+
+export type updateSubmissaoResponse200 = {
+  data: MissoesSubmissoes
+  status: 200
+}
+    
+export type updateSubmissaoResponseSuccess = (updateSubmissaoResponse200) & {
+  headers: Headers;
+};
+;
+
+export type updateSubmissaoResponse = (updateSubmissaoResponseSuccess)
+
+export const getUpdateSubmissaoUrl = (id: number,) => {
+
+
+  
+
+  return `http://localhost:3333/api/v1/missoes-submissoes/${id}`
+}
+
+export const updateSubmissao = async (id: number,
+    missoesSubmissoes: MissoesSubmissoes, options?: RequestInit): Promise<updateSubmissaoResponse> => {
+  
+  const res = await fetch(getUpdateSubmissaoUrl(id),
+  {      
+    ...options,
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(
+      missoesSubmissoes,)
+  }
+)
+
+  const body = [204, 205, 304].includes(res.status) ? null : await res.text();
+  
+  const data: updateSubmissaoResponse['data'] = body ? JSON.parse(body) : {}
+  return { data, status: res.status, headers: res.headers } as updateSubmissaoResponse
 }
 
 
@@ -850,6 +1688,243 @@ export const updateNivelDefinicao = async (id: number,
   
   const data: updateNivelDefinicaoResponse['data'] = body ? JSON.parse(body) : {}
   return { data, status: res.status, headers: res.headers } as updateNivelDefinicaoResponse
+}
+
+
+
+export type createQuestionarioResponse200 = {
+  data: Questionario
+  status: 200
+}
+    
+export type createQuestionarioResponseSuccess = (createQuestionarioResponse200) & {
+  headers: Headers;
+};
+;
+
+export type createQuestionarioResponse = (createQuestionarioResponseSuccess)
+
+export const getCreateQuestionarioUrl = () => {
+
+
+  
+
+  return `http://localhost:3333/api/v1/questionario`
+}
+
+export const createQuestionario = async (questionario: Questionario, options?: RequestInit): Promise<createQuestionarioResponse> => {
+  
+  const res = await fetch(getCreateQuestionarioUrl(),
+  {      
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(
+      questionario,)
+  }
+)
+
+  const body = [204, 205, 304].includes(res.status) ? null : await res.text();
+  
+  const data: createQuestionarioResponse['data'] = body ? JSON.parse(body) : {}
+  return { data, status: res.status, headers: res.headers } as createQuestionarioResponse
+}
+
+
+
+export type getAllQuestionariosResponse200 = {
+  data: GetAllQuestionarios200
+  status: 200
+}
+    
+export type getAllQuestionariosResponseSuccess = (getAllQuestionariosResponse200) & {
+  headers: Headers;
+};
+;
+
+export type getAllQuestionariosResponse = (getAllQuestionariosResponseSuccess)
+
+export const getGetAllQuestionariosUrl = () => {
+
+
+  
+
+  return `http://localhost:3333/api/v1/questionario/all`
+}
+
+export const getAllQuestionarios = async ( options?: RequestInit): Promise<getAllQuestionariosResponse> => {
+  
+  const res = await fetch(getGetAllQuestionariosUrl(),
+  {      
+    ...options,
+    method: 'GET'
+    
+    
+  }
+)
+
+  const body = [204, 205, 304].includes(res.status) ? null : await res.text();
+  
+  const data: getAllQuestionariosResponse['data'] = body ? JSON.parse(body) : {}
+  return { data, status: res.status, headers: res.headers } as getAllQuestionariosResponse
+}
+
+
+
+export type getQuestionarioByMissaoResponse200 = {
+  data: Questionario
+  status: 200
+}
+    
+export type getQuestionarioByMissaoResponseSuccess = (getQuestionarioByMissaoResponse200) & {
+  headers: Headers;
+};
+;
+
+export type getQuestionarioByMissaoResponse = (getQuestionarioByMissaoResponseSuccess)
+
+export const getGetQuestionarioByMissaoUrl = (missaoId: number,) => {
+
+
+  
+
+  return `http://localhost:3333/api/v1/questionario/missao/${missaoId}`
+}
+
+export const getQuestionarioByMissao = async (missaoId: number, options?: RequestInit): Promise<getQuestionarioByMissaoResponse> => {
+  
+  const res = await fetch(getGetQuestionarioByMissaoUrl(missaoId),
+  {      
+    ...options,
+    method: 'GET'
+    
+    
+  }
+)
+
+  const body = [204, 205, 304].includes(res.status) ? null : await res.text();
+  
+  const data: getQuestionarioByMissaoResponse['data'] = body ? JSON.parse(body) : {}
+  return { data, status: res.status, headers: res.headers } as getQuestionarioByMissaoResponse
+}
+
+
+
+export type deleteQuestionarioResponse200 = {
+  data: string
+  status: 200
+}
+    
+export type deleteQuestionarioResponseSuccess = (deleteQuestionarioResponse200) & {
+  headers: Headers;
+};
+;
+
+export type deleteQuestionarioResponse = (deleteQuestionarioResponseSuccess)
+
+export const getDeleteQuestionarioUrl = (id: number,) => {
+
+
+  
+
+  return `http://localhost:3333/api/v1/questionario/${id}`
+}
+
+export const deleteQuestionario = async (id: number, options?: RequestInit): Promise<deleteQuestionarioResponse> => {
+  
+  const res = await fetch(getDeleteQuestionarioUrl(id),
+  {      
+    ...options,
+    method: 'DELETE'
+    
+    
+  }
+)
+
+  const body = [204, 205, 304].includes(res.status) ? null : await res.text();
+  
+  const data: deleteQuestionarioResponse['data'] = body ? JSON.parse(body) : {}
+  return { data, status: res.status, headers: res.headers } as deleteQuestionarioResponse
+}
+
+
+
+export type getByIdQuestionarioResponse200 = {
+  data: Questionario
+  status: 200
+}
+    
+export type getByIdQuestionarioResponseSuccess = (getByIdQuestionarioResponse200) & {
+  headers: Headers;
+};
+;
+
+export type getByIdQuestionarioResponse = (getByIdQuestionarioResponseSuccess)
+
+export const getGetByIdQuestionarioUrl = (id: number,) => {
+
+
+  
+
+  return `http://localhost:3333/api/v1/questionario/${id}`
+}
+
+export const getByIdQuestionario = async (id: number, options?: RequestInit): Promise<getByIdQuestionarioResponse> => {
+  
+  const res = await fetch(getGetByIdQuestionarioUrl(id),
+  {      
+    ...options,
+    method: 'GET'
+    
+    
+  }
+)
+
+  const body = [204, 205, 304].includes(res.status) ? null : await res.text();
+  
+  const data: getByIdQuestionarioResponse['data'] = body ? JSON.parse(body) : {}
+  return { data, status: res.status, headers: res.headers } as getByIdQuestionarioResponse
+}
+
+
+
+export type updateQuestionarioResponse200 = {
+  data: Questionario
+  status: 200
+}
+    
+export type updateQuestionarioResponseSuccess = (updateQuestionarioResponse200) & {
+  headers: Headers;
+};
+;
+
+export type updateQuestionarioResponse = (updateQuestionarioResponseSuccess)
+
+export const getUpdateQuestionarioUrl = (id: number,) => {
+
+
+  
+
+  return `http://localhost:3333/api/v1/questionario/${id}`
+}
+
+export const updateQuestionario = async (id: number,
+    questionario: Questionario, options?: RequestInit): Promise<updateQuestionarioResponse> => {
+  
+  const res = await fetch(getUpdateQuestionarioUrl(id),
+  {      
+    ...options,
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(
+      questionario,)
+  }
+)
+
+  const body = [204, 205, 304].includes(res.status) ? null : await res.text();
+  
+  const data: updateQuestionarioResponse['data'] = body ? JSON.parse(body) : {}
+  return { data, status: res.status, headers: res.headers } as updateQuestionarioResponse
 }
 
 

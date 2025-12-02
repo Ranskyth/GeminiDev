@@ -4,7 +4,9 @@
  * OpenAPI definition
  * OpenAPI spec version: v0
  */
+import type { User } from './user';
 
-export type GetUserByEmailParams = {
-id: number;
-};
+export interface Inventario {
+  id?: number;
+  user?: User;
+}

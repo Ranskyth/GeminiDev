@@ -1,14 +1,6 @@
 "use client";
 
-import {
-  Modal,
-  ModalBody,
-  ModalContent,
-  ModalFooter,
-  ModalHeader,
-  useDisclosure,
-} from "@heroui/modal";
-
+import { InputCriar, ModalCriar, SelectCriar } from "@/components/modal-criar";
 import { useEffect, useState } from "react";
 
 export default function Loja() {
@@ -18,8 +10,8 @@ export default function Loja() {
   const [itemSelecionado, setItemSelecionado] = useState<number | undefined>();
   const [preco, setPreco] = useState<number>(0);
   const [tipoMoeda, setTipoMoeda] = useState<string>("");
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
   const loadLoja = async () => {
     //const { data } = await getAllLojaItem();
@@ -45,7 +37,6 @@ export default function Loja() {
     setTipoMoeda("");
 
     await loadLoja();
-    onOpenChange();
   };
 
   const handleDelete = async (id: number) => {
@@ -69,7 +60,7 @@ export default function Loja() {
           />
 
           <button
-            onClick={onOpen}
+            onClick={() => setIsModalOpen(true)}
             className="h-10 rounded-[10px] px-5 font-bold bg-[#9B32EF] hover:bg-[#9B32EF]/80"
           >
             Adicionar Item na Loja
@@ -101,65 +92,32 @@ export default function Loja() {
         </ul>
       </div>
 
-      <Modal
-        className="top-50 p-5 bg-[#000000] h-fit w-[75%]"
-        isOpen={isOpen}
-        onOpenChange={onOpenChange}
+      <ModalCriar
+        isOpen={isModalOpen}
+        onOpenChange={setIsModalOpen}
+        titulo="Adicionar Item na Loja"
+        onCriar={handleCreate}
       >
-        <ModalContent>
-          <>
-            <ModalHeader className="mt-10">
-              <h1>Adicionar Item à Loja</h1>
-            </ModalHeader>
-
-            <ModalBody className="flex flex-col gap-4">
-              <select
-                value={itemSelecionado}
-                onChange={(e) => setItemSelecionado(Number(e.target.value))}
-                className="h-10 pl-4 rounded-2xl border"
-              >
-                <option value="">Selecione um item</option>
-                {itens.map((item) => (
-                  <option key={item.id} value={item.id}>
-                    {item.nome}
-                  </option>
-                ))}
-              </select>
-
-              <input
-                type="number"
-                value={preco}
-                onChange={(e) => setPreco(Number(e.target.value))}
-                className="h-10 pl-4 rounded-2xl border"
-                placeholder="Preço"
-              />
-
-              <input
-                value={tipoMoeda}
-                onChange={(e) => setTipoMoeda(e.target.value)}
-                className="h-10 pl-4 rounded-2xl border"
-                placeholder="Tipo da Moeda (ex: moedas, diamantes)"
-              />
-            </ModalBody>
-
-            <ModalFooter className="gap-4 mb-5">
-              <button
-                className="h-10 px-5 bg-[#ef3232] rounded-[10px]"
-                onClick={onOpenChange}
-              >
-                Cancelar
-              </button>
-
-              <button
-                className="h-10 px-5 bg-[#32c3ef] rounded-[10px]"
-                onClick={handleCreate}
-              >
-                Criar
-              </button>
-            </ModalFooter>
-          </>
-        </ModalContent>
-      </Modal>
+        <SelectCriar
+          label="Selecionar Item"
+          options={itens.map(item => ({ value: item.id, label: item.nome }))}
+          value={itemSelecionado}
+          onChange={(e) => setItemSelecionado(Number(e.target.value))}
+        />
+        <InputCriar
+          label="Preço"
+          type="number"
+          value={preco}
+          onChange={(e) => setPreco(Number(e.target.value))}
+          placeholder="Digite o preço"
+        />
+        <InputCriar
+          label="Tipo da Moeda"
+          value={tipoMoeda}
+          onChange={(e) => setTipoMoeda(e.target.value)}
+          placeholder="Ex: moedas, diamantes"
+        />
+      </ModalCriar>
     </>
   );
 }

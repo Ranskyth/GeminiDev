@@ -7,6 +7,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import com.example.backend.enums.UserRole;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.CascadeType;
@@ -50,7 +51,6 @@ public class User implements UserDetails {
     private UserRole role;
 
     @ManyToOne
-    @JsonIgnore
     @JoinColumn(name = "turma_id")
     private Turma turma;
 

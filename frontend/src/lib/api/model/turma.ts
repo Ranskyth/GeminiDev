@@ -4,11 +4,9 @@
  * OpenAPI definition
  * OpenAPI spec version: v0
  */
-import type { User } from './user';
 
 export interface Turma {
   id?: number;
   nome?: string;
   periodo?: string;
-  user?: User[];
 }

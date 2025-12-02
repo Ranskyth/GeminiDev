@@ -7,6 +7,7 @@
 import type { Atributo } from './atributo';
 import type { GrantedAuthority } from './grantedAuthority';
 import type { UserRole } from './userRole';
+import type { Turma } from './turma';
 
 export interface User {
   accountNonExpired?: boolean;
@@ -22,5 +23,6 @@ export interface User {
   password?: string;
   role?: UserRole;
   senha?: string;
+  turma?: Turma;
   username?: string;
 }

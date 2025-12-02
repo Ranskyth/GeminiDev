@@ -30,6 +30,4 @@ public class MissoesSubmissoes {
 
     @Column(columnDefinition = "TEXT")
     private String observacao;
-
-    private String arquivoUrl;
 }

@@ -1,5 +1,6 @@
 import { getCookie } from "cookies-next";
 import Link from "next/link";
+import { LanguageModal } from "./language-modal";
 
 export const Header = () => {
   const github_user = getCookie("github_user");
@@ -32,16 +33,17 @@ export const Header = () => {
           <img className="w-4 h-4" src={"/star.svg"} />
           <p className="text-[12px]">0</p>
         </div>
-        <div className="bg-[#1B1E26] w-14 flex justify-center items-center gap-1 rounded-2xl h-8">
+        <div className="bg-[#1B1E26] mr-5 w-14 flex justify-center items-center gap-1 rounded-2xl h-8">
           <img className="w-4 h-4" src={"/dollar.svg"} />
           <p className="text-[12px]">0</p>
         </div>
-        <div className="overflow-hidden w-10 rounded-[25] h-10">
+        <LanguageModal />
+        <div className="overflow-hidden w-10 ml-5 rounded-[25] h-10">
           <Link href={"/perfil"}>
             <img src={`https://github.com/${github_user}.png`} alt="" />
           </Link>
         </div>
-        <button className="w-6 h-6">
+        <button className="w-6 h-6 ml-10">
           <img className="w-full h-full" src="/logout.svg" alt="" />
         </button>
       </div>

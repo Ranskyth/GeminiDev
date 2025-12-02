@@ -6,7 +6,7 @@ export default defineConfig({
       target: 'src/lib/api/generated.ts',
       schemas: 'src/lib/api/model',
       client: 'fetch',
-      baseUrl: `http://localhost:3333`,
+      baseUrl: 'http://localhost:3333',
     },
     input: {
       target: './../docs/swagger.json',

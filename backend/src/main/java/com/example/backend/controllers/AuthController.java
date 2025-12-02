@@ -8,7 +8,7 @@ import com.example.backend.dto.UserDto;
 import com.example.backend.model.Atributo;
 import com.example.backend.model.Token;
 import com.example.backend.model.User;
-import com.example.backend.model.UserRole;
+import com.example.backend.enums.UserRole;
 import com.example.backend.repository.TurmaRepository;
 import com.example.backend.repository.UserRepository;
 import com.example.backend.services.AuthServices;

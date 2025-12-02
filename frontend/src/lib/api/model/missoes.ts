@@ -4,9 +4,9 @@
  * OpenAPI definition
  * OpenAPI spec version: v0
  */
-import type { Turma } from './turma';
 
 export interface Missoes {
+  conteudo?: string;
   descricao?: string;
   diamantesRecompensa?: number;
   esmeraldasRecompensa?: number;
@@ -14,6 +14,5 @@ export interface Missoes {
   moedasRecompensa?: number;
   nome?: string;
   rubysRecompensa?: number;
-  turma?: Turma;
   xpRecompensa?: number;
 }
